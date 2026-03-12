@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<!-- TEMPLATE — substitua com dados reais do seu pipeline -->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YM Relógios — Template de Re-engagement</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;line-height:1.5;padding:12px 16px 40px;max-width:960px;margin:0 auto}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline;color:#79c0ff}
+
+/* HEADER */
+.header{padding:20px 0 16px;border-bottom:1px solid #30363d;margin-bottom:20px}
+.header h1{font-size:22px;color:#f0f6fc;font-weight:800;margin-bottom:2px;letter-spacing:-0.3px}
+.header .subtitle{font-size:12px;color:#8b949e;margin-bottom:12px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:10px}
+.stat-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:10px 12px;text-align:center}
+.stat-box .num{font-size:24px;font-weight:800;color:#f0f6fc;line-height:1.1}
+.stat-box .lbl{font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.stat-box.critical-box{border-color:#f8514966;background:linear-gradient(135deg,#1a0a0e,#161b22)}
+.stat-box.critical-box .num{color:#f85149}
+.stat-box.high-box .num{color:#d29922}
+.stat-box.waiting-box .num{color:#58a6ff}
+.stat-box.stalled-box .num{color:#8b949e}
+.timestamp{font-size:11px;color:#484f58}
+
+/* CRITICAL ALERT */
+.critical-alert{background:linear-gradient(135deg,#3b0a0a,#1c0505);border:1px solid #f8514966;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.critical-alert .pulse-dot{width:12px;height:12px;border-radius:50%;background:#f85149;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(248,81,73,0.6)}50%{opacity:0.7;box-shadow:0 0 0 8px rgba(248,81,73,0)}}
+.critical-alert .alert-text{font-size:13px;color:#f0f6fc;font-weight:600}
+.critical-alert .alert-sub{font-size:11px;color:#f8514999;margin-top:2px;font-weight:400}
+
+/* SECTION HEADERS */
+.section-header{padding:10px 14px;border-radius:8px;margin:24px 0 12px;font-size:15px;font-weight:700;color:#f0f6fc;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.section-header .count{font-weight:400;font-size:12px;color:rgba(255,255,255,0.6)}
+.section-header-red{background:linear-gradient(135deg,#6b1d1d,#3b1010);border:1px solid #f8514933}
+.section-header-blue{background:linear-gradient(135deg,#0d2847,#0d1117);border:1px solid #58a6ff33}
+.section-header-gray{background:#21262d;border:1px solid #30363d}
+.section-header-table{background:linear-gradient(135deg,#1c1e26,#161b22);border:1px solid #30363d;cursor:pointer;user-select:none}
+
+/* CARDS */
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 14px;margin-bottom:10px;border-left:4px solid #30363d;transition:border-color 0.2s,box-shadow 0.2s}
+.card:hover{box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.card-critical{border-left-color:#f85149;animation:card-pulse 3s ease-in-out infinite;background:linear-gradient(135deg,#1a0d0d,#161b22)}
+@keyframes card-pulse{0%,100%{border-left-color:#f85149}50%{border-left-color:#da3633}}
+.card-high{border-left-color:#d29922}
+.card-medium{border-left-color:#8b949e}
+.card-resolved{border-left-color:#484f58;border-style:dashed;opacity:0.7}
+.card-ball{border-left-color:#58a6ff}
+.card-ball-resolved{border-left-color:#238636;border-left-style:dashed;opacity:0.7}
+.card-stalled{border-left-color:#6e7681}
+.card-stalled-hot{border-left-color:#d29922}
+
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:4px}
+.card-name{font-size:14px;font-weight:700;color:#f0f6fc}
+.card-city{font-size:11px;color:#6c757d;font-weight:400;margin-left:6px}
+.card-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+
+.badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;color:#fff;text-transform:uppercase;letter-spacing:0.5px}
+.badge-critical{background:#da3633}
+.badge-high{background:#9e6a03}
+.badge-medium{background:#484f58}
+.badge-deal{background:#da3633}
+.badge-pos-venda{background:#8957e5}
+.badge-prospect{background:#1f6feb}
+.badge-encontro{background:#238636}
+.badge-partnership{background:#d29922}
+.badge-warm{background:#316dca}
+.badge-resolved{background:#30363d;color:#8b949e}
+.badge-stalled{background:#21262d;border:1px solid #484f58;color:#8b949e}
+
+.urgency-label{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:0.3px}
+.urgency-critical{background:#f8514933;color:#f85149;border:1px solid #f8514966}
+.urgency-high{background:#d299221a;color:#d29922;border:1px solid #d2992233}
+.urgency-medium{background:#8b949e1a;color:#8b949e;border:1px solid #8b949e33}
+.urgency-low{background:#30363d;color:#6e7681;border:1px solid #30363d}
+.urgency-resolved{background:#23863622;color:#3fb950;border:1px solid #23863644}
+
+.card-phone{font-family:'Courier New',Consolas,monospace;font-size:12px;color:#8b949e;margin-bottom:4px}
+.card-phone a{color:#8b949e}
+.card-phone a:hover{color:#58a6ff}
+.lid-mono{font-family:'Courier New',Consolas,monospace;font-size:10px;color:#484f58;margin-bottom:4px}
+
+.card-line{font-size:12px;color:#8b949e;margin-bottom:3px}
+.card-line strong{color:#c9d1d9;font-weight:600}
+.card-line em{font-style:italic;color:#b1bac4}
+.card-line .label{color:#6c757d;min-width:100px;display:inline-block}
+
+.media-flag{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#d97706;color:#fff;text-transform:uppercase;letter-spacing:0.3px;margin-left:4px;vertical-align:middle}
+
+/* Watch Tags */
+.watch-tags{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 6px}
+.watch-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px;background:#21262d;color:#8b949e;border:1px solid #30363d;white-space:nowrap}
+
+/* Score Tooltip */
+.score-wrap{display:inline-flex;align-items:center;gap:4px;position:relative;cursor:help}
+.score-num{font-size:13px;font-weight:800}
+.score-high{color:#3fb950}
+.score-mid{color:#d29922}
+.score-low{color:#8b949e}
+.score-help{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#21262d;border:1px solid #30363d;color:#6c757d;font-size:9px;font-weight:700;line-height:1}
+.score-tooltip{display:none;position:absolute;right:0;top:22px;background:#1c2128;border:1px solid #30363d;border-radius:6px;padding:8px 12px;font-size:11px;color:#c9d1d9;white-space:nowrap;z-index:100;line-height:1.7;box-shadow:0 4px 16px rgba(0,0,0,0.5)}
+.score-wrap:hover .score-tooltip{display:block}
+.score-plus{color:#3fb950}
+.score-minus{color:#f85149}
+
+/* Suggested row */
+.suggested-row{display:flex;align-items:flex-start;gap:8px;margin-top:6px;background:#1c2128;border-radius:6px;padding:8px 10px;border:1px solid #30363d}
+.suggested-icon{color:#d29922;font-size:14px;flex-shrink:0;margin-top:1px}
+.suggested-text{font-size:12px;color:#adbac7;flex:1;line-height:1.5}
+.copy-btn{background:#21262d;border:1px solid #30363d;color:#8b949e;font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.2s}
+.copy-btn:hover{background:#30363d;color:#c9d1d9}
+.copy-btn.copied{background:#238636;color:#fff;border-color:#238636}
+
+/* Compact cards for BOLA COM ELES */
+.card-compact{padding:8px 12px;margin-bottom:6px}
+.card-compact .card-line{margin-bottom:2px}
+
+/* Collapsible */
+.collapsible{display:none}
+.collapsible.open{display:block}
+
+/* Table */
+.table-controls{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.table-search{flex:1;min-width:200px;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:13px;outline:none}
+.table-search:focus{border-color:#58a6ff}
+.table-search::placeholder{color:#484f58}
+.table-sort-btn{background:#21262d;border:1px solid #30363d;color:#8b949e;font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.table-sort-btn:hover,.table-sort-btn.active{background:#30363d;color:#c9d1d9;border-color:#58a6ff}
+
+.contact-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:12px}
+.contact-table th{text-align:left;padding:6px 8px;border-bottom:2px solid #30363d;color:#8b949e;font-weight:600;white-space:nowrap;position:sticky;top:0;background:#0d1117;cursor:pointer;user-select:none}
+.contact-table th:hover{color:#c9d1d9}
+.contact-table td{padding:5px 8px;border-bottom:1px solid #21262d;vertical-align:top;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.contact-table tr:hover td{background:#161b22}
+.contact-table .td-name{color:#f0f6fc;font-weight:600}
+.contact-table .td-msg{color:#8b949e;font-style:italic}
+.contact-table .td-section{font-size:9px;padding:2px 6px;border-radius:8px;display:inline-block;font-weight:700;text-transform:uppercase}
+.td-section-responder{background:#f8514922;color:#f85149}
+.td-section-bola{background:#58a6ff22;color:#58a6ff}
+.td-section-parado{background:#8b949e22;color:#8b949e}
+
+/* Responsive */
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .card-top{flex-direction:column;align-items:flex-start}
+  .card-right{margin-top:4px}
+  .contact-table{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>YM Relógios — Template de Re-engagement</h1>
+  <div class="subtitle">Template com dados fictícios</div>
+  <div class="stats-grid">
+    <div class="stat-box critical-box">
+      <div class="num">13</div>
+      <div class="lbl">Responder Agora</div>
+    </div>
+    <div class="stat-box high-box">
+      <div class="num" id="stat-critical-count">2</div>
+      <div class="lbl">Criticos ($$)</div>
+    </div>
+    <div class="stat-box waiting-box">
+      <div class="num">7</div>
+      <div class="lbl">Bola com Eles</div>
+    </div>
+    <div class="stat-box stalled-box">
+      <div class="num">11</div>
+      <div class="lbl">Parados</div>
+    </div>
+  </div>
+  <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:6px">
+    <div class="stat-box">
+      <div class="num" style="font-size:18px;color:#c9d1d9">31+</div>
+      <div class="lbl">Total Contatos</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" style="font-size:18px;color:#c9d1d9">~5</div>
+      <div class="lbl">Contatos Antigos</div>
+    </div>
+  </div>
+  <div class="timestamp">Ultimo scan: <span id="scan-ts">2026-03-01T23:30:00-03:00</span> — <span id="scan-ago"></span></div>
+</div>
+
+<!-- CRITICAL ALERT -->
+<div class="critical-alert">
+  <div class="pulse-dot"></div>
+  <div>
+    <div class="alert-text">ALERTA CRITICO: 2 compradores de alto valor sem resposta!</div>
+    <div class="alert-sub">5511900000101 — R$ 9.900, sem resposta desde 28/Fev | 5511900000102 — R$ 8.500 Cronógrafo Premium, sem resposta desde 27/Fev</div>
+  </div>
+</div>
+
+<!-- ====================== SECTION 1: RESPONDER AGORA ====================== -->
+<div class="section-header section-header-red">
+  <span>RESPONDER AGORA</span>
+  <span class="count">13 contatos esperando sua resposta</span>
+</div>
+
+<!-- CRITICAL: 5511900000101 — alto valor -->
+<div class="card card-critical" data-score="92" data-ts="2026-03-01T17:49:59">
+  <div class="card-top">
+    <div>
+      <span class="card-name">João Silva</span>
+      <span class="card-city">Orcamento R$ 9.900</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-critical">CRITICO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">92</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+40</span> Budget R$ 9.900<br>
+          <span class="score-plus">+20</span> Seguiu up hoje<br>
+          <span class="score-plus">+15</span> Perguntou parcelamento<br>
+          <span class="score-plus">+10</span> Ativo recentemente<br>
+          <span class="score-minus">-3</span> Sem historico anterior
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000101" target="_blank">+55 11 90000-0101</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Budget R$ 9.900</span>
+    <span class="watch-tag">Quer parcelamento</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Ola, tudo bem?"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> <strong>28/Fev:</strong> "Estou interessado em algo ate 10 mil reais" + perguntou parcelamento. SEM resposta. Voltou hoje.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:49:59"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000101">Fala João! Vi sua msg sobre parcelamento. Sim, trabalho com cartao. Ate 10k tenho otimas opcoes. Qual modelo te interessa?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000101',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- CRITICAL: 5511900000102 — cronografo premium -->
+<div class="card card-critical" data-score="85" data-ts="2026-02-27T13:33:48">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Maria Oliveira</span>
+      <span class="card-city">Cronógrafo Premium R$ 8.500</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-critical">CRITICO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">85</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+35</span> Interesse em R$ 8.500<br>
+          <span class="score-plus">+25</span> Disse "Tenho interesse"<br>
+          <span class="score-plus">+15</span> Peca especifica<br>
+          <span class="score-minus">-5</span> 2 dias sem resposta
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000102" target="_blank">+55 11 90000-0102</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Cronógrafo Premium 2022 (R$ 8.500)</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Tenho interesse nesse modelo"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> <strong>27/Fev:</strong> Disse "Tenho interesse nesse" sobre Cronógrafo Premium 2022 R$ 8.500. <strong style="color:#f85149">ZERO resposta em 2 dias.</strong></div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-27T13:33:48"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000102">Oi Maria, desculpa a demora! Vi seu interesse no Cronógrafo Premium. Ainda ta disponivel. Quer que eu mande mais fotos/video?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000102',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- HIGH: 5511900000103 — dois modelos -->
+<div class="card card-high" data-score="90" data-ts="2026-03-01T21:09:07">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Carlos Mendes</span>
+      <span class="card-city">Modelo X / Modelo Clássico Y</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">90</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+30</span> Negocia modelos de alto valor<br>
+          <span class="score-plus">+25</span> Ativo hoje, multiplas msgs<br>
+          <span class="score-plus">+20</span> Perguntou preco + ano<br>
+          <span class="score-plus">+15</span> 2 modelos de interesse<br>
+          <span class="score-minus">-0</span> Pode ter sido respondido via outro numero
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000103" target="_blank">+55 11 90000-0103</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Relógio Modelo X</span>
+    <span class="watch-tag">Modelo Clássico Y</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Qual ano?"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> Perguntou preco do Modelo X + Modelo Clássico Y hoje as 12:57. Disse "Gostei muito" e "Nao entendo mesmo" ~21:06, depois "Qual ano?" as 21:09. Respondeu via chat separado com precos (R$ 3.200 Modelo X 2012, R$ 9.900 Modelo Clássico Y 2023). Pode nao ter respondido NESTE chat.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T21:09:07"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000103">Fala Carlos! O Modelo X e de 2012 e o Modelo Clássico Y de 2023. Modelo X ta R$ 3.200 e Modelo Clássico Y R$ 9.900. Qual te interessa mais? Mando fotos!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000103',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- HIGH: 5511900000104 — proposta enviada -->
+<div class="card card-high" data-score="88" data-ts="2026-03-01T17:51:37">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Ana Costa</span>
+      <span class="card-city">Nordeste (DDD 85)</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">88</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+30</span> Negociacao de R$ 3.200<br>
+          <span class="score-plus">+25</span> Re-engajou hoje<br>
+          <span class="score-plus">+20</span> Pediu valor<br>
+          <span class="score-plus">+13</span> Historico de deal
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000104" target="_blank">+55 11 90000-0104</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Deal anterior R$ 3.200</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Boa tarde / Qual valor?"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> 26/Fev: negociacao detalhada de R$ 3.200. Oferta de "Nem eu nem vc, so pra sair". Disse "Pensar". Agora voltou hoje perguntando valor — possivelmente nova peca ou retomando deal.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:37"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000104">Fala Ana! Boa tarde! Me fala qual peca e te passo o valor</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000104',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- HIGH: 5511900000105 — comprador ativo nova consulta -->
+<div class="card card-high" data-score="85" data-ts="2026-03-01T17:51:37">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Roberto Nascimento</span>
+      <span class="card-city">Sul (DDD 41)</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <span class="badge badge-pos-venda" style="font-size:8px">POS-VENDA</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">85</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+30</span> Comprador ativo<br>
+          <span class="score-plus">+20</span> Nova consulta com imagem<br>
+          <span class="score-plus">+20</span> Ja comprou (Modelo Clássico Y)<br>
+          <span class="score-plus">+15</span> Tem dinheiro
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000105" target="_blank">+55 11 90000-0105</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Modelo Clássico Y (comprou)</span>
+    <span class="watch-tag">Nova peca (consultando)</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Irmao, qual o tamanho desse relogio?"</em> <span class="media-flag">IMAGEM</span></div>
+  <div class="card-line"><span class="label">Contexto:</span> 27/Fev: escolheu Modelo Clássico Y, entrega ate 13/Mar prometida. Agora perguntando TAMANHO de outra peca com imagem. Comprador ativo.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:37"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000105">Fala Roberto! Esse ai e 41mm. Ficou show o Modelo Clássico Y ne? Quer que eu mande as specs completas desse?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000105',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- HIGH: 5511900000106 — parceria exterior -->
+<div class="card card-high" data-score="82" data-ts="2026-03-01T17:49:03">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Paulo Brandão</span>
+      <span class="card-city">Exterior (US)</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-partnership">DEAL/PARCERIA</span>
+      <div class="score-wrap">
+        <span class="score-num score-high">82</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+25</span> Oferecendo inventario<br>
+          <span class="score-plus">+20</span> Proposta de parceria<br>
+          <span class="score-plus">+20</span> Cronógrafo Premium 2025 zero<br>
+          <span class="score-plus">+17</span> Conexao internacional
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000106" target="_blank">+55 11 90000-0106</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Cronógrafo Premium 2025</span>
+    <span class="watch-tag">Modelo X (quer)</span>
+    <span class="watch-tag">Trade opportunities</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Estou com um Cronógrafo Premium 2025 zero tbm pulseira original"</em> <span class="media-flag">IMAGEM</span></div>
+  <div class="card-line"><span class="label">Contexto:</span> Oferecendo Cronógrafo Premium 2025 zero. Proposta: "Se tiver candidato pro Cronógrafo vc vende e me arruma um Modelo X aqui fora". Oportunidade de parceria.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:49:03"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000106">Fala Paulo! Show, o Cronógrafo ta zerado mesmo? Quanto ta pedindo nele? E sobre o Modelo X, tenho uns contatos aqui que podem ter interesse no Cronógrafo. Vamos combinar!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000106',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM: 5511900000107 — prospect recorrente -->
+<div class="card card-medium" data-score="72" data-ts="2026-03-01T17:55:58">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Fernando Lima</span>
+      <span class="card-city">Relógio Modelo X 41mm</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-prospect">PROSPECT</span>
+      <div class="score-wrap">
+        <span class="score-num score-mid">72</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+20</span> Modelo especifico<br>
+          <span class="score-plus">+20</span> Ativo hoje<br>
+          <span class="score-plus">+15</span> Repeat inquiry<br>
+          <span class="score-plus">+10</span> Relacionamento cordial<br>
+          <span class="score-minus">-3</span> Prospect, nao deal ainda
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000107" target="_blank">+55 11 90000-0107</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Relógio Modelo X 41mm</span>
+    <span class="watch-tag">Modelo 2013</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Fala / Modelo X 41?"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> Perguntou sobre Relógio Modelo X 41mm hoje. Antes perguntou "O de 2013 ainda ta disponivel?" em 26/Fev. Consultor recorrente.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:55:58"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000107">Fala Fernando! Relógio Modelo X 41, tenho sim. Qual referencia exata? Te mando fotos e valor!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000107',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM: Contato SP -->
+<div class="card card-medium" data-score="78" data-ts="2026-03-01T18:08:09">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Patrícia Moraes</span>
+      <span class="card-city">São Paulo (DDD 11)</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-deal">DEAL</span>
+      <div class="score-wrap">
+        <span class="score-num score-mid">78</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+25</span> Negociando peca de R$ 3.200<br>
+          <span class="score-plus">+20</span> Ativo hoje<br>
+          <span class="score-plus">+15</span> Historico R$ 8.500<br>
+          <span class="score-plus">+10</span> Relacionamento proximo<br>
+          <span class="score-minus">-2</span> Msg casual, pode nao estar comprando
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000108" target="_blank">+55 11 90000-0108</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Peca R$ 3.200 (atual)</span>
+    <span class="watch-tag">Antes: Modelo R$ 8.500</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Fala, bom dia firme"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> Mandou info de preco mais cedo (R$ 3.200, ano). Patrícia respondeu as 18:08 com saudacao casual. Pode estar reconhecendo ou querendo negociar. Historico de R$ 8.500 em Jan.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T18:08:09"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+
+    <span class="suggested-text" id="msg-felipesouza">Fala Patrícia! Firmeza? Sobre aquele de R$ 3.200, quer fechar?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-felipesouza',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM: 5511900000109 — encontro presencial -->
+<div class="card card-medium" data-score="65" data-ts="2026-03-01T17:49:56">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Gustavo Ribeiro</span>
+      <span class="card-city">Vai para São Paulo fim de Marco</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-encontro">ENCONTRO</span>
+      <div class="score-wrap">
+        <span class="score-num score-mid">65</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+20</span> Quer ver pessoalmente<br>
+          <span class="score-plus">+15</span> SP fim de Marco<br>
+          <span class="score-plus">+15</span> Ja disse que quer experimentar<br>
+          <span class="score-plus">+10</span> Time-sensitive<br>
+          <span class="score-minus">-5</span> Ainda nao tem peca definida
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000109" target="_blank">+55 11 90000-0109</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Quer ver pessoalmente</span>
+    <span class="watch-tag">Encontro SP</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Final de marco estarei em Sao Paulo"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> 26/Fev: "Se tiver maquina la, gostaria de experimentar sim". 28/Fev: "Boa". Agora: vai estar em SP fim de Marco. Quer ver relogios pessoalmente.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:49:56"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000109">Show Gustavo! Tenho pecas aqui em SP sim. Quando exatamente voce chega? Vou separar umas opcoes pra voce experimentar!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000109',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM: 5511900000110 — consulta com imagem -->
+<div class="card card-medium" data-score="68" data-ts="2026-03-01T17:51:38">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Leandro Teixeira</span>
+      <span class="card-city">Peca de R$ 1.500 antes</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-prospect">PROSPECT</span>
+      <div class="score-wrap">
+        <span class="score-num score-mid">68</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+20</span> Historico de R$ 1.500<br>
+          <span class="score-plus">+20</span> Mandou imagem hoje<br>
+          <span class="score-plus">+15</span> Ativo<br>
+          <span class="score-plus">+8</span> Relacionamento cordial<br>
+          <span class="score-minus">-5</span> Nao se sabe a peca
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000110" target="_blank">+55 11 90000-0110</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Peca de R$ 1.500 (anterior)</span>
+    <span class="watch-tag">Nova consulta (imagem)</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>[image]</em> <span class="media-flag">IMAGEM</span></div>
+  <div class="card-line"><span class="label">Contexto:</span> 26/Fev: "Fala. Tudo bem? quanto custa?" — perguntou preco. Respondeu "R$ 1.500". Agora mandou imagem — provavelmente nova consulta.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:38"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000110">Fala Leandro! Vi a foto, show. Deixa eu ver aqui e ja te passo valor e detalhes!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000110',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM: comprador confirmado pos-venda -->
+<div class="card card-medium" data-score="75" data-ts="2026-02-24T13:40:27">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Camila Souza</span>
+      <span class="card-city">Nordeste (DDD 81)</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-pos-venda">POS-VENDA</span>
+      <div class="score-wrap">
+        <span class="score-num score-mid">75</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+25</span> Compradora (R$ 2.800)<br>
+          <span class="score-plus">+20</span> Bom relacionamento<br>
+          <span class="score-plus">+15</span> Mandou audio<br>
+          <span class="score-plus">+10</span> Historico de pecas<br>
+          <span class="score-minus">-5</span> 5 dias sem resposta
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000111" target="_blank">+55 11 90000-0111</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Cronógrafo Esportivo (comprou)</span>
+    <span class="watch-tag">Deal fechado R$ 2.800</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>[audio]</em> <span class="media-flag">AUDIO</span></div>
+  <div class="card-line"><span class="label">Contexto:</span> COMPRADORA. 13/Fev: "Fechado" — deal de R$ 2.800, 2025 zero. 24/Fev: mandou audio sem resposta. Bom relacionamento ("E ai, tudo bem?").</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-24T13:40:27"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-lucaspereira">E ai Camila! Desculpa a demora, tava corrido aqui. Ouvi seu audio — me fala, tudo certo com a peca? Precisa de algo?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-lucaspereira',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- LOW: 5511900000112 — entusiasta colecao -->
+<div class="card card-medium" data-score="62" data-ts="2026-03-01T18:02:34">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Marcos Figueiredo</span>
+      <span class="card-city">Entusiasta de relogios</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-low">BAIXO</span>
+      <span class="badge badge-warm">WARM</span>
+      <div class="score-wrap">
+        <span class="score-num score-low">62</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+15</span> Colecao crescente<br>
+          <span class="score-plus">+15</span> Tem Modelo A + Modelo B<br>
+          <span class="score-plus">+15</span> Shopping para proximo<br>
+          <span class="score-plus">+10</span> Modelo C / Modelo D target<br>
+          <span class="score-minus">-3</span> Conversa natural, sem urgencia
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000112" target="_blank">+55 11 90000-0112</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Modelo C (proximo)</span>
+    <span class="watch-tag">Modelo D (proximo)</span>
+    <span class="watch-tag">Tem: Modelo A</span>
+    <span class="watch-tag">Tem: Modelo B</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"hahaha pois e"</em></div>
+  <div class="card-line"><span class="label">Contexto:</span> Colecao: entrada > intermediario > Modelo A > Modelo B. Vendeu peca anterior. Proximo: Modelo C ou Modelo D. Msg casual, conversa pode ter acabado naturalmente.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T18:02:34"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000112">Hahaha! E ai, ja decidiu o proximo? Se for Modelo C ou Modelo D, tenho uns interessantes pra te mostrar!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000112',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- POSSIBLY RESOLVED: 5511900000113 — pos-venda acessorio -->
+<div class="card card-resolved" data-score="70" data-ts="2026-03-01T18:55:39">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Juliana Pires</span>
+      <span class="card-city">Compradora pos-venda</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-resolved">RESOLVIDO?</span>
+      <span class="badge badge-pos-venda">POS-VENDA</span>
+      <div class="score-wrap">
+        <span class="score-num score-low">70</span>
+        <span class="score-help">?</span>
+        <div class="score-tooltip">
+          <span class="score-plus">+25</span> Comprou Produto Genérico<br>
+          <span class="score-plus">+15</span> Ativo hoje<br>
+          <span class="score-plus">+15</span> Pos-venda<br>
+          <span class="score-minus">-5</span> Ja respondido
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000113" target="_blank">+55 11 90000-0113</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Produto Genérico R$ 9.999 (comprou)</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Tava vendo o anuncio do produto. E vi que o meu que comprei faltou apenas o acessorio."</em> <span class="media-flag">IMAGEM</span></div>
+  <div class="card-line"><span class="label">Contexto:</span> Compradora perguntando sobre acessorio faltando. Ja respondido — bridge pode nao ter sincronizado.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T18:55:39"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000113">Fala Juliana! Sobre o acessorio — nem todos vem com ele, e isso nao afeta o valor de revenda do relogio. Fique tranquila!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000113',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- ====================== SECTION 2: BOLA COM ELES ====================== -->
+<div class="section-header section-header-blue">
+  <span>BOLA COM ELES</span>
+  <span class="count">7 contatos — voce mandou ultima msg, aguardando resposta</span>
+</div>
+
+<!-- 5511900000114 — aguardando sobre preco -->
+<div class="card card-compact card-ball" data-score="0" data-ts="2026-03-01T21:10:18">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Sandro Cavalcanti</span>
+      <span class="card-city">Sudeste (DDD 31) — aguardando resposta</span>
+    </div>
+    <div class="card-right">
+      <span class="badge badge-deal" style="font-size:8px">DEAL</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000114" target="_blank">+55 11 90000-0114</a></div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"2023"</em> (ano do modelo) — Respondeu precos: Modelo X 2012 = R$ 3.200, Modelo Clássico Y 2023 = R$ 9.900</div>
+  <div class="card-line"><span class="label">Status:</span> Aguardando resposta sobre pricing</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T21:10:18"></span></div>
+</div>
+
+<!-- 5511900000115 — oferta de peca rara -->
+<div class="card card-compact card-ball" data-score="0" data-ts="2026-03-01T17:51:37">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Beatriz Almeida</span>
+      <span class="card-city">Rio de Janeiro (DDD 21) — Peca rara edicao limitada</span>
+    </div>
+    <div class="card-right">
+      <span class="badge badge-deal" style="font-size:8px">DEAL</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000115" target="_blank">+55 11 90000-0115</a></div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"Quer ir a SP ver?"</em> — Peca rara, edicao limitada, full set, nao esta no RJ.</div>
+  <div class="card-line"><span class="label">Status:</span> Aguardando resposta sobre oferta de encontro em SP</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:37"></span></div>
+</div>
+
+<!-- 5511900000116 — oferta produto intermediario -->
+<div class="card card-compact card-ball" data-score="0" data-ts="2026-03-01T13:37:08">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Henrique Gomes</span>
+      <span class="card-city">Produto Intermediário R$ 5.500</span>
+    </div>
+    <div class="card-right">
+      <span class="badge badge-deal" style="font-size:8px">DEAL</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000116" target="_blank">+55 11 90000-0116</a></div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"Fala / Nao vi sua msg / E o Produto Intermediário / Garantido / R$ 5.500 usado"</em></div>
+  <div class="card-line"><span class="label">Status:</span> Aguardando resposta sobre oferta de R$ 5.500</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T13:37:08"></span></div>
+</div>
+
+<!-- 5511900000117 — parceria margem -->
+<div class="card card-compact card-ball" data-score="0" data-ts="2026-03-01T17:51:47">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Thiago Vasconcelos</span>
+      <span class="card-city">Parceria — Pecas descontinuadas</span>
+    </div>
+    <div class="card-right">
+      <span class="badge badge-partnership" style="font-size:8px">PARCERIA</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000117" target="_blank">+55 11 90000-0117</a></div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"Que tem saida para os produtos dele se conseguirmos um preco legal / Da pra voce colocar sua margem..."</em></div>
+  <div class="card-line"><span class="label">Status:</span> Parceria ativa, propondo margem nos deals</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:47"></span></div>
+</div>
+
+<!-- Comprador pos-venda — RESOLVED -->
+<div class="card card-compact card-ball-resolved" data-score="0" data-ts="2026-02-28T14:33:07">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Adriana Barbosa</span>
+      <span class="card-city">Questao de acessorio resolvida</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-resolved">RESOLVIDO</span>
+      <span class="badge badge-pos-venda" style="font-size:8px">POS-VENDA</span>
+    </div>
+  </div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"Mas fique tranquila, pois isso nao afeta o valor de revenda do seu relogio"</em></div>
+  <div class="card-line"><span class="label">Status:</span> Questao resolvida em 28/Fev. Aguardando modelo 2025.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-28T14:33:07"></span></div>
+</div>
+
+<!-- 5511900000118 — nudge disponibilidade -->
+<div class="card card-compact card-ball" data-score="0" data-ts="2026-02-28T13:15:52">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Igor Santana</span>
+      <span class="card-city">Mostrador especial</span>
+    </div>
+    <div class="card-right">
+      <span class="badge badge-deal" style="font-size:8px">DEAL</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000118" target="_blank">+55 11 90000-0118</a></div>
+  <div class="card-line"><span class="label">Voce mandou:</span> <em>"Ainda disponivel"</em> + imagem</div>
+  <div class="card-line"><span class="label">Status:</span> Aguardando resposta ao nudge de disponibilidade</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-28T13:15:52"></span></div>
+</div>
+
+<!-- 5511900000119 — outro numero RESOLVED -->
+<div class="card card-compact card-ball-resolved" data-score="0" data-ts="2026-03-01T17:51:37">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Vanessa Rodrigues</span>
+      <span class="card-city">Outro WhatsApp</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-resolved">RESOLVIDO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000119" target="_blank">+55 11 90000-0119</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"ja estamos falando no outro whats / nunca sei quando e voce ou nao rs"</em></div>
+  <div class="card-line"><span class="label">Status:</span> Ja conversando no outro numero. Sem acao necessaria.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-03-01T17:51:37"></span></div>
+</div>
+
+<!-- ====================== SECTION 3: PARADOS (STALLED) ====================== -->
+<div class="section-header section-header-gray">
+  <span>PARADOS (STALLED)</span>
+  <span class="count">11 contatos — eles mandaram msg e voce nao respondeu (7+ dias)</span>
+</div>
+
+<!-- HOT STALLED: 5511900000120 — interesse confirmado -->
+<div class="card card-stalled-hot" data-score="0" data-ts="2026-02-13T19:51:12">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Ricardo Araújo</span>
+      <span class="card-city">Nordeste (DDD 71) — 16 dias sem resposta</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000120" target="_blank">+55 11 90000-0120</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em style="color:#d29922;font-weight:600">"Tenho interesse sim"</em> — <strong style="color:#f85149">GHOSTED</strong></div>
+  <div class="card-line"><span class="label">Silencio:</span> 16 dias (desde 13/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-13T19:51:12"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000120">Fala Ricardo! Desculpa a demora, tava bem corrido. Vi que voce tem interesse sim! A peca ainda ta disponivel. Quer que eu mande fotos e detalhes?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000120',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- HOT STALLED: 5511900000121 — pergunta de entrega -->
+<div class="card card-stalled-hot" data-score="0" data-ts="2026-02-13T17:51:21">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Simone Castro</span>
+      <span class="card-city">Sul (DDD 51) — 16 dias sem resposta</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-high">ALTO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000121" target="_blank">+55 11 90000-0121</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em style="color:#d29922;font-weight:600">"Quanto tempo pra entregar?"</em> — <strong style="color:#f85149">GHOSTED</strong></div>
+  <div class="card-line"><span class="label">Silencio:</span> 16 dias (desde 13/Fev).</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-13T17:51:21"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000121">Fala Simone! Desculpa a demora. Entrega costuma ser de 7 a 15 dias uteis dependendo da peca e localizacao. Qual peca voce ta de olho?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000121',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM STALLED: 5511900000122 — pergunta simples -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-13T12:00:11">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Danilo Freitas</span>
+      <span class="card-city">Rio de Janeiro (DDD 21) — 16 dias</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000122" target="_blank">+55 11 90000-0122</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Tem no Brasil?"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 16 dias (desde 13/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-13T12:00:11"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000122">Fala Danilo! Sim, peca ta no Brasil sim. Quer que eu mande mais detalhes?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000122',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM STALLED: 5511900000123 — saudacao sem resposta -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-10T14:14:29">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Natália Barros</span>
+      <span class="card-city">Sudeste (DDD 31) — 19 dias</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000123" target="_blank">+55 11 90000-0123</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Oi, tudo bem?"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 19 dias (desde 10/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-10T14:14:29"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000123">Opa, desculpa a demora! Fala, tudo bem? No que posso te ajudar?</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000123',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM STALLED: 5511900000124 — meta fim de trimestre -->
+<div class="card card-stalled-hot" data-score="0" data-ts="2026-02-05T15:32:05">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Eduardo Pinto</span>
+      <span class="card-city">Colecionador — meta Modelo C Q1</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000124" target="_blank">+55 11 90000-0124</a></div>
+  <div class="watch-tags">
+    <span class="watch-tag">Modelo C (meta Q1)</span>
+    <span class="watch-tag">Marca Alternativa Z</span>
+    <span class="watch-tag">Tem: Produto Entrada, Produto Medio, Modelo A</span>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Ainda em decisao, to com alguns intermediarios em ideia... pensando em algo premium, Modelo C como meta ate o final do quarter"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 24 dias (desde 5/Fev). <strong style="color:#d29922">Fim de Q1 = fim de Marco! Timing perfeito para re-engajar.</strong></div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-05T15:32:05"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000124">Fala Eduardo! Lembrei que voce mencionou Modelo C como meta do Q1. Ta chegando o final de marco — quer dar uma olhada nas opcoes que tenho? Tenho uns precos bons!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000124',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- MEDIUM STALLED: interesse em uso -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-14T21:08:04">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Rodrigo Monteiro</span>
+      <span class="card-city">Centro-Oeste (DDD 62) — 15 dias</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000125" target="_blank">+55 11 90000-0125</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Queria usar"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 15 dias (desde 14/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-14T21:08:04"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-diegomartins">Fala Rodrigo! Vi que queria usar. Qual peca? Te mostro as opcoes que tenho no momento!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-diegomartins',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- LOW STALLED: Contato interno — team -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-18T19:36:32" style="opacity:0.6">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Contato Interno</span>
+      <span class="card-city">Time — baixa prioridade</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-low">BAIXO</span>
+      <span class="badge badge-stalled">YM TEAM</span>
+    </div>
+  </div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Troca??"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 11 dias (desde 18/Fev). Membro do time.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-18T19:36:32"></span></div>
+</div>
+
+<!-- LOW STALLED: 5511900000126 — aguardando informacao -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-15T20:27:25" style="opacity:0.6">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Contato</span>
+      <span class="card-city">Nordeste (DDD 71) — Aguardando informacao</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-low">BAIXO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000126" target="_blank">+55 11 90000-0126</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>"Irmao / Consegue passar as informacoes"</em></div>
+  <div class="card-line"><span class="label">Silencio:</span> 14 dias (desde 15/Fev). Pode ser time.</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-15T20:27:25"></span></div>
+</div>
+
+<!-- MEDIUM STALLED: 5511900000127 — image -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-21T14:12:17">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Contato LID</span>
+      <span class="card-city">8 dias — mandou imagem</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-medium">MEDIO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="lid-mono">LID: 5511900000127</div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>[image]</em> <span class="media-flag">IMAGEM</span></div>
+  <div class="card-line"><span class="label">Silencio:</span> 8 dias (desde 21/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-21T14:12:17"></span></div>
+  <div class="suggested-row">
+    <span class="suggested-icon">&#9998;</span>
+    <span class="suggested-text" id="msg-5511900000127">Fala! Desculpa a demora, vi sua foto. Me conta, qual peca e essa? Te passo mais detalhes!</span>
+    <button class="copy-btn" onclick="copyMsg('msg-5511900000127',this)">Copiar</button>
+  </div>
+</div>
+
+<!-- LOW STALLED: 5511900000128 — media -->
+<div class="card card-stalled" data-score="0" data-ts="2026-02-19T19:04:07" style="opacity:0.6">
+  <div class="card-top">
+    <div>
+      <span class="card-name">Contato SP</span>
+      <span class="card-city">São Paulo (DDD 11) — 10 dias</span>
+    </div>
+    <div class="card-right">
+      <span class="urgency-label urgency-low">BAIXO</span>
+      <span class="badge badge-stalled">PARADO</span>
+    </div>
+  </div>
+  <div class="card-phone"><a href="https://wa.me/5511900000128" target="_blank">+55 11 90000-0128</a></div>
+  <div class="card-line"><span class="label">Ultima msg:</span> <em>[media]</em> <span class="media-flag">MEDIA</span></div>
+  <div class="card-line"><span class="label">Silencio:</span> 10 dias (desde 19/Fev)</div>
+  <div class="card-line"><span class="label">Ativo:</span> <span class="rel-time" data-ts="2026-02-19T19:04:07"></span></div>
+</div>
+
+<!-- ====================== SECTION 4: TODOS OS CONTATOS ====================== -->
+<div class="section-header section-header-table" onclick="toggleTable()">
+  <span>TODOS OS CONTATOS</span>
+  <span class="count" id="table-toggle-label">Clique para expandir &#9660;</span>
+</div>
+
+<div class="collapsible" id="all-contacts-section">
+  <div class="table-controls">
+    <input type="text" class="table-search" id="table-search" placeholder="Buscar por nome, telefone, mensagem...">
+    <button class="table-sort-btn active" data-sort="score" onclick="sortTable('score',this)">Score</button>
+    <button class="table-sort-btn" data-sort="ts" onclick="sortTable('ts',this)">Ativo</button>
+    <button class="table-sort-btn" data-sort="urgency" onclick="sortTable('urgency',this)">Urgencia</button>
+  </div>
+  <div style="overflow-x:auto">
+  <table class="contact-table" id="all-contacts-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Contato</th>
+        <th>Secao</th>
+        <th>Ultima Msg</th>
+        <th>Ativo</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- RESPONDER AGORA -->
+      <tr data-score="92" data-ts="2026-03-01T17:49:59" data-urgency="1">
+        <td class="td-name">João Silva (R$ 9.900)</td>
+        <td><a href="https://wa.me/5511900000101">5511900000101</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Ola, tudo bem?</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:49:59"></span></td>
+        <td><strong style="color:#3fb950">92</strong></td>
+      </tr>
+      <tr data-score="90" data-ts="2026-03-01T21:09:07" data-urgency="2">
+        <td class="td-name">Carlos Mendes (Modelo X)</td>
+        <td><a href="https://wa.me/5511900000103">5511900000103</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Qual ano?</td>
+        <td><span class="rel-time" data-ts="2026-03-01T21:09:07"></span></td>
+        <td><strong style="color:#3fb950">90</strong></td>
+      </tr>
+      <tr data-score="88" data-ts="2026-03-01T17:51:37" data-urgency="2">
+        <td class="td-name">Ana Costa</td>
+        <td><a href="https://wa.me/5511900000104">5511900000104</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Boa tarde / Qual valor?</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:37"></span></td>
+        <td><strong style="color:#3fb950">88</strong></td>
+      </tr>
+      <tr data-score="85" data-ts="2026-02-27T13:33:48" data-urgency="1">
+        <td class="td-name">Maria Oliveira (R$ 8.500)</td>
+        <td><a href="https://wa.me/5511900000102">5511900000102</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Tenho interesse nesse modelo...</td>
+        <td><span class="rel-time" data-ts="2026-02-27T13:33:48"></span></td>
+        <td><strong style="color:#3fb950">85</strong></td>
+      </tr>
+      <tr data-score="85" data-ts="2026-03-01T17:51:37" data-urgency="2">
+        <td class="td-name">Roberto Nascimento</td>
+        <td><a href="https://wa.me/5511900000105">5511900000105</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Irmao, qual o tamanho desse relogio?</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:37"></span></td>
+        <td><strong style="color:#3fb950">85</strong></td>
+      </tr>
+      <tr data-score="82" data-ts="2026-03-01T17:49:03" data-urgency="2">
+        <td class="td-name">Paulo Brandão</td>
+        <td><a href="https://wa.me/5511900000106">5511900000106</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Estou com um Cronógrafo Premium 2025 zero...</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:49:03"></span></td>
+        <td><strong style="color:#3fb950">82</strong></td>
+      </tr>
+      <tr data-score="78" data-ts="2026-03-01T18:08:09" data-urgency="3">
+        <td class="td-name">Patrícia Moraes</td>
+        <td><a href="https://wa.me/5511900000108">5511900000108</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Fala, bom dia firme</td>
+        <td><span class="rel-time" data-ts="2026-03-01T18:08:09"></span></td>
+        <td><strong style="color:#d29922">78</strong></td>
+      </tr>
+      <tr data-score="75" data-ts="2026-02-24T13:40:27" data-urgency="3">
+        <td class="td-name">Camila Souza</td>
+        <td><a href="https://wa.me/5511900000111">5511900000111</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">[audio]</td>
+        <td><span class="rel-time" data-ts="2026-02-24T13:40:27"></span></td>
+        <td><strong style="color:#d29922">75</strong></td>
+      </tr>
+      <tr data-score="72" data-ts="2026-03-01T17:55:58" data-urgency="3">
+        <td class="td-name">Fernando Lima (Modelo X)</td>
+        <td><a href="https://wa.me/5511900000107">5511900000107</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Fala / Modelo X 41?</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:55:58"></span></td>
+        <td><strong style="color:#d29922">72</strong></td>
+      </tr>
+      <tr data-score="70" data-ts="2026-03-01T18:55:39" data-urgency="5">
+        <td class="td-name">Juliana Pires (pos-venda)</td>
+        <td><a href="https://wa.me/5511900000113">5511900000113</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Tava vendo o anuncio do produto...</td>
+        <td><span class="rel-time" data-ts="2026-03-01T18:55:39"></span></td>
+        <td><strong style="color:#d29922">70</strong></td>
+      </tr>
+      <tr data-score="68" data-ts="2026-03-01T17:51:38" data-urgency="3">
+        <td class="td-name">Leandro Teixeira (R$ 1.500)</td>
+        <td><a href="https://wa.me/5511900000110">5511900000110</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">[image]</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:38"></span></td>
+        <td><strong style="color:#d29922">68</strong></td>
+      </tr>
+      <tr data-score="65" data-ts="2026-03-01T17:49:56" data-urgency="3">
+        <td class="td-name">Gustavo Ribeiro (SP meetup)</td>
+        <td><a href="https://wa.me/5511900000109">5511900000109</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">Final de marco estarei em Sao Paulo</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:49:56"></span></td>
+        <td><strong style="color:#d29922">65</strong></td>
+      </tr>
+      <tr data-score="62" data-ts="2026-03-01T18:02:34" data-urgency="4">
+        <td class="td-name">Marcos Figueiredo (colecao)</td>
+        <td><a href="https://wa.me/5511900000112">5511900000112</a></td>
+        <td><span class="td-section td-section-responder">Responder</span></td>
+        <td class="td-msg">hahaha pois e</td>
+        <td><span class="rel-time" data-ts="2026-03-01T18:02:34"></span></td>
+        <td><strong style="color:#8b949e">62</strong></td>
+      </tr>
+      <!-- BOLA COM ELES -->
+      <tr data-score="0" data-ts="2026-03-01T21:10:18" data-urgency="6">
+        <td class="td-name">Sandro Cavalcanti (Modelo X)</td>
+        <td><a href="https://wa.me/5511900000114">5511900000114</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: "2023" (precos enviados)</td>
+        <td><span class="rel-time" data-ts="2026-03-01T21:10:18"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-03-01T17:51:37" data-urgency="6">
+        <td class="td-name">Beatriz Almeida (SP)</td>
+        <td><a href="https://wa.me/5511900000115">5511900000115</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: "Quer ir a SP ver?"</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:37"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-03-01T13:37:08" data-urgency="6">
+        <td class="td-name">Henrique Gomes (R$ 5.500)</td>
+        <td><a href="https://wa.me/5511900000116">5511900000116</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: "R$ 5.500 usado"</td>
+        <td><span class="rel-time" data-ts="2026-03-01T13:37:08"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-03-01T17:51:47" data-urgency="6">
+        <td class="td-name">Thiago Vasconcelos (Parceria)</td>
+        <td><a href="https://wa.me/5511900000117">5511900000117</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: proposta de margem</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:47"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-28T14:33:07" data-urgency="7">
+        <td class="td-name">Adriana Barbosa</td>
+        <td><a href="https://wa.me/5511900000129">5511900000129</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: acessorio nao afeta revenda [RESOLVIDO]</td>
+        <td><span class="rel-time" data-ts="2026-02-28T14:33:07"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-28T13:15:52" data-urgency="6">
+        <td class="td-name">Igor Santana (mostrador especial)</td>
+        <td><a href="https://wa.me/5511900000118">5511900000118</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Voce: "Ainda disponivel"</td>
+        <td><span class="rel-time" data-ts="2026-02-28T13:15:52"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-03-01T17:51:37" data-urgency="7">
+        <td class="td-name">Vanessa Rodrigues (Outro WhatsApp)</td>
+        <td><a href="https://wa.me/5511900000119">5511900000119</a></td>
+        <td><span class="td-section td-section-bola">Bola c/ Eles</span></td>
+        <td class="td-msg">Falando no outro whats [RESOLVIDO]</td>
+        <td><span class="rel-time" data-ts="2026-03-01T17:51:37"></span></td>
+        <td>—</td>
+      </tr>
+      <!-- PARADOS -->
+      <tr data-score="0" data-ts="2026-02-13T19:51:12" data-urgency="2">
+        <td class="td-name">Ricardo Araújo</td>
+        <td><a href="https://wa.me/5511900000120">5511900000120</a></td>
+        <td><span class="td-section td-section-parado">Parado 16d</span></td>
+        <td class="td-msg" style="color:#d29922">Tenho interesse sim</td>
+        <td><span class="rel-time" data-ts="2026-02-13T19:51:12"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-13T17:51:21" data-urgency="2">
+        <td class="td-name">Simone Castro</td>
+        <td><a href="https://wa.me/5511900000121">5511900000121</a></td>
+        <td><span class="td-section td-section-parado">Parado 16d</span></td>
+        <td class="td-msg" style="color:#d29922">Quanto tempo pra entregar?</td>
+        <td><span class="rel-time" data-ts="2026-02-13T17:51:21"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-13T12:00:11" data-urgency="3">
+        <td class="td-name">Danilo Freitas</td>
+        <td><a href="https://wa.me/5511900000122">5511900000122</a></td>
+        <td><span class="td-section td-section-parado">Parado 16d</span></td>
+        <td class="td-msg">Tem no Brasil?</td>
+        <td><span class="rel-time" data-ts="2026-02-13T12:00:11"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-10T14:14:29" data-urgency="3">
+        <td class="td-name">Natália Barros</td>
+        <td><a href="https://wa.me/5511900000123">5511900000123</a></td>
+        <td><span class="td-section td-section-parado">Parado 19d</span></td>
+        <td class="td-msg">Oi, tudo bem?</td>
+        <td><span class="rel-time" data-ts="2026-02-10T14:14:29"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-05T15:32:05" data-urgency="3">
+        <td class="td-name">Eduardo Pinto (Modelo C)</td>
+        <td><a href="https://wa.me/5511900000124">5511900000124</a></td>
+        <td><span class="td-section td-section-parado">Parado 24d</span></td>
+        <td class="td-msg">Modelo C como meta Q1</td>
+        <td><span class="rel-time" data-ts="2026-02-05T15:32:05"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-14T21:08:04" data-urgency="3">
+        <td class="td-name">Rodrigo Monteiro</td>
+        <td><a href="https://wa.me/5511900000125">5511900000125</a></td>
+        <td><span class="td-section td-section-parado">Parado 15d</span></td>
+        <td class="td-msg">Queria usar</td>
+        <td><span class="rel-time" data-ts="2026-02-14T21:08:04"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-18T19:36:32" data-urgency="4">
+        <td class="td-name">Contato Interno</td>
+        <td><a href="https://wa.me/5511900000130">5511900000130</a></td>
+        <td><span class="td-section td-section-parado">Parado 11d</span></td>
+        <td class="td-msg">Troca??</td>
+        <td><span class="rel-time" data-ts="2026-02-18T19:36:32"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-15T20:27:25" data-urgency="4">
+        <td class="td-name">Contato Nordeste</td>
+        <td><a href="https://wa.me/5511900000126">5511900000126</a></td>
+        <td><span class="td-section td-section-parado">Parado 14d</span></td>
+        <td class="td-msg">Irmao / Consegue passar as informacoes</td>
+        <td><span class="rel-time" data-ts="2026-02-15T20:27:25"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-21T14:12:17" data-urgency="3">
+        <td class="td-name">Contato LID (imagem)</td>
+        <td><span style="font-family:monospace;font-size:10px">5511900000127</span></td>
+        <td><span class="td-section td-section-parado">Parado 8d</span></td>
+        <td class="td-msg">[image]</td>
+        <td><span class="rel-time" data-ts="2026-02-21T14:12:17"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-02-19T19:04:07" data-urgency="4">
+        <td class="td-name">Contato SP</td>
+        <td><a href="https://wa.me/5511900000128">5511900000128</a></td>
+        <td><span class="td-section td-section-parado">Parado 10d</span></td>
+        <td class="td-msg">[media]</td>
+        <td><span class="rel-time" data-ts="2026-02-19T19:04:07"></span></td>
+        <td>—</td>
+      </tr>
+      <!-- OLDER NOTABLE -->
+      <tr data-score="0" data-ts="2026-01-19T00:00:00" data-urgency="4">
+        <td class="td-name">Contato LID (modelo misto)</td>
+        <td><span style="font-family:monospace;font-size:10px">5511900000201</span></td>
+        <td><span class="td-section td-section-parado">Parado 41d</span></td>
+        <td class="td-msg">Ola, pode me passar informacoes do modelo misto</td>
+        <td><span class="rel-time" data-ts="2026-01-19T00:00:00"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-01-19T00:00:00" data-urgency="4">
+        <td class="td-name">Contato LID (R$ 1.500+)</td>
+        <td><span style="font-family:monospace;font-size:10px">5511900000202</span></td>
+        <td><span class="td-section td-section-parado">Parado 41d</span></td>
+        <td class="td-msg">Ai ja sao uns de R$ 1.500 pra mais ne?</td>
+        <td><span class="rel-time" data-ts="2026-01-19T00:00:00"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2026-01-13T00:00:00" data-urgency="4">
+        <td class="td-name">Contato LID (varios modelos)</td>
+        <td><span style="font-family:monospace;font-size:10px">5511900000203</span></td>
+        <td><span class="td-section td-section-parado">Parado 47d</span></td>
+        <td class="td-msg">Por favor, quais os valores desses modelos?</td>
+        <td><span class="rel-time" data-ts="2026-01-13T00:00:00"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2025-12-10T00:00:00" data-urgency="4">
+        <td class="td-name">Contato SP (interesse geral)</td>
+        <td><a href="https://wa.me/5511900000204">5511900000204</a></td>
+        <td><span class="td-section td-section-parado">Parado 81d</span></td>
+        <td class="td-msg">Tem alguma novidade?</td>
+        <td><span class="rel-time" data-ts="2025-12-10T00:00:00"></span></td>
+        <td>—</td>
+      </tr>
+      <tr data-score="0" data-ts="2025-12-10T00:00:00" data-urgency="4">
+        <td class="td-name">Contato Brasilia (troca)</td>
+        <td><a href="https://wa.me/5511900000205">5511900000205</a></td>
+        <td><span class="td-section td-section-parado">Parado 81d</span></td>
+        <td class="td-msg">To com um desse mas queria um Modelo D</td>
+        <td><span class="rel-time" data-ts="2025-12-10T00:00:00"></span></td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div style="text-align:center;padding:20px 0;font-size:11px;color:#484f58;border-top:1px solid #21262d;margin-top:30px">
+  YM Relógios — Template com dados fictícios | Estrutura baseada em scan de 01/Mar/2026 23:30 BRT
+</div>
+
+<script>
+/* Relative time computation */
+function relTime(isoStr) {
+  var d = new Date(isoStr);
+  var now = new Date();
+  var diff = now - d;
+  var mins = Math.floor(diff / 60000);
+  var hrs = Math.floor(diff / 3600000);
+  var days = Math.floor(diff / 86400000);
+  if (mins < 1) return 'agora';
+  if (mins < 60) return 'ha ' + mins + ' min';
+  if (hrs < 24) return 'ha ' + hrs + 'h';
+  if (days === 1) return 'ha 1 dia';
+  return 'ha ' + days + ' dias';
+}
+
+function updateAllTimes() {
+  var els = document.querySelectorAll('.rel-time');
+  for (var i = 0; i < els.length; i++) {
+    els[i].textContent = relTime(els[i].getAttribute('data-ts'));
+  }
+  var scanEl = document.getElementById('scan-ago');
+  if (scanEl) {
+    scanEl.textContent = relTime('2026-03-01T23:30:00-03:00');
+  }
+}
+updateAllTimes();
+setInterval(updateAllTimes, 60000);
+
+/* Copy to clipboard */
+function copyMsg(id, btn) {
+  var text = document.getElementById(id).textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'Copiado!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copiar';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  } else {
+    /* Fallback */
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+    btn.textContent = 'Copiado!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+}
+
+/* Toggle collapsible table */
+function toggleTable() {
+  var section = document.getElementById('all-contacts-section');
+  var label = document.getElementById('table-toggle-label');
+  if (section.classList.contains('open')) {
+    section.classList.remove('open');
+    label.innerHTML = 'Clique para expandir &#9660;';
+  } else {
+    section.classList.add('open');
+    label.innerHTML = 'Clique para recolher &#9650;';
+  }
+}
+
+/* Search filter */
+document.getElementById('table-search').addEventListener('input', function() {
+  var val = this.value.toLowerCase();
+  var rows = document.querySelectorAll('#table-body tr');
+  for (var i = 0; i < rows.length; i++) {
+    var text = rows[i].textContent.toLowerCase();
+    rows[i].style.display = text.indexOf(val) > -1 ? '' : 'none';
+  }
+});
+
+/* Sort table */
+function sortTable(by, btn) {
+  /* Update active button */
+  var btns = document.querySelectorAll('.table-sort-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  btn.classList.add('active');
+
+  var tbody = document.getElementById('table-body');
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+
+  rows.sort(function(a, b) {
+    if (by === 'score') {
+      var sa = parseInt(a.getAttribute('data-score')) || 0;
+      var sb = parseInt(b.getAttribute('data-score')) || 0;
+      return sb - sa;
+    }
+    if (by === 'ts') {
+      var ta = new Date(a.getAttribute('data-ts')).getTime();
+      var tb = new Date(b.getAttribute('data-ts')).getTime();
+      return tb - ta;
+    }
+    if (by === 'urgency') {
+      var ua = parseInt(a.getAttribute('data-urgency')) || 99;
+      var ub = parseInt(b.getAttribute('data-urgency')) || 99;
+      return ua - ub;
+    }
+    return 0;
+  });
+
+  for (var i = 0; i < rows.length; i++) {
+    tbody.appendChild(rows[i]);
+  }
+}
+</script>
+</body>
+</html>

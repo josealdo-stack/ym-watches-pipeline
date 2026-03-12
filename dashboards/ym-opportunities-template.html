@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<!-- TEMPLATE — substitua com dados reais do seu pipeline -->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YM Watches — Template de Oportunidades</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ECE5DD;color:#111;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5}
+
+/* HEADER */
+.wa-header{background:#075E54;color:#fff;padding:14px 20px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.wa-header h1{font-size:18px;font-weight:700;letter-spacing:-.2px}
+.wa-header .sub{font-size:12px;color:#b2dfdb;margin-top:2px}
+.stats-row{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.12);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:#fff}
+.stat span{font-size:15px;font-weight:800;margin-right:4px}
+
+/* SECTION */
+.section{margin:16px 12px 8px}
+details summary{cursor:pointer;list-style:none;user-select:none}
+details summary::-webkit-details-marker{display:none}
+.section-label{font-size:14px;font-weight:700;padding:10px 16px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.section-label .cnt{font-size:11px;font-weight:500;opacity:.75}
+.section-label .arrow{font-size:11px;transition:transform .2s}
+details[open] .arrow{transform:rotate(180deg)}
+.s-red{background:#dc2626;color:#fff}
+.s-yellow{background:#d97706;color:#fff}
+.s-money{background:#059669;color:#fff}
+.s-blue{background:#2563eb;color:#fff}
+.s-purple{background:#7c3aed;color:#fff}
+
+/* CARDS */
+.card{background:#fff;border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.card-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0f0}
+.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.av-green{background:#25D366;color:#fff}
+.av-orange{background:#f97316;color:#fff}
+.av-blue{background:#3b82f6;color:#fff}
+.av-purple{background:#8b5cf6;color:#fff}
+.av-teal{background:#14b8a6;color:#fff}
+.card-meta{flex:1}
+.contact-name{font-size:14px;font-weight:700;color:#111}
+.last-active{font-size:11px;color:#888}
+.wa-link{display:inline-flex;align-items:center;gap:3px;background:#25D366;color:#fff!important;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-decoration:none;margin-left:4px;vertical-align:middle}
+.wa-link:hover{background:#1ebe5d}
+.wa-lid{display:inline-block;background:#e5e7eb;color:#9ca3af;font-size:10px;padding:2px 8px;border-radius:10px;margin-left:4px}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px}
+.b-red{background:#fee2e2;color:#dc2626}
+.b-orange{background:#fef3c7;color:#d97706}
+.b-green{background:#d1fae5;color:#059669}
+.b-blue{background:#dbeafe;color:#2563eb}
+.b-purple{background:#ede9fe;color:#7c3aed}
+.b-grey{background:#f3f4f6;color:#6b7280}
+.urgency-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-red{background:#dc2626;animation:blink 1.5s infinite}
+.dot-orange{background:#f97316}
+.dot-yellow{background:#eab308}
+.dot-blue{background:#3b82f6}
+.dot-grey{background:#9ca3af}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* CHAT BUBBLES */
+.chat-area{background:#ECE5DD;padding:10px 12px;min-height:60px}
+.bubble-row{display:flex;margin-bottom:6px}
+.bubble-row.sent{justify-content:flex-end}
+.bubble-row.recv{justify-content:flex-start}
+.bubble{max-width:75%;padding:7px 10px;border-radius:8px;font-size:12.5px;line-height:1.45;position:relative}
+.bubble.recv{background:#fff;border-top-left-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.bubble.sent{background:#DCF8C6;border-top-right-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.bubble .ts{font-size:10px;color:#999;margin-top:3px;text-align:right}
+.bubble .sender{font-size:10px;font-weight:700;color:#075E54;margin-bottom:2px}
+
+/* OPPORTUNITY LABEL */
+.opp-label{padding:8px 14px;font-size:12px;display:flex;align-items:flex-start;gap:8px;background:#f8faff;border-top:1px solid #e8eaf0}
+.opp-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.opp-text{flex:1}
+.opp-title{font-weight:700;color:#1a1a2e;font-size:12px}
+.opp-angle{color:#555;font-size:11.5px;margin-top:2px}
+
+/* WATCH/PRICE META */
+.watch-meta{padding:6px 14px 8px;display:flex;gap:8px;flex-wrap:wrap;background:#fafafa;border-top:1px solid #f0f0f0}
+.wmeta{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:600}
+.wm-watch{background:#e0f2fe;color:#0369a1}
+.wm-price{background:#dcfce7;color:#166534}
+.wm-time{background:#fef3c7;color:#92400e}
+
+/* SEND BUBBLE (CTA) */
+.send-cta{background:#f0fdf4;padding:10px 14px;border-top:2px solid #86efac}
+.send-label{font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.send-bubble{background:#DCF8C6;border-radius:8px;border-top-right-radius:2px;padding:8px 12px;font-size:13px;font-style:italic;color:#111;display:inline-block;max-width:90%;box-shadow:0 1px 2px rgba(0,0,0,.1);line-height:1.5}
+.send-bubble::after{content:'✓✓';font-size:10px;color:#34D366;margin-left:6px}
+
+/* URGENCY BANNER */
+.urgency-banner{background:#dc2626;color:#fff;padding:4px 14px;font-size:11px;font-weight:700;text-align:center;letter-spacing:.3px}
+.urgency-banner.orange{background:#d97706}
+.urgency-banner.green{background:#059669}
+
+/* SEPARATOR */
+.section-date{text-align:center;margin:8px 0;font-size:11px;color:#888}
+.section-date span{background:#d8cfc8;padding:3px 10px;border-radius:10px}
+
+/* SUMMARY TABLE */
+.summary-table{background:#fff;border-radius:12px;overflow:hidden;margin:16px 12px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.st-header{background:#128C7E;color:#fff;padding:10px 14px;font-size:13px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{background:#f8f8f8;padding:7px 10px;text-align:left;font-weight:600;color:#555;border-bottom:1px solid #eee}
+td{padding:7px 10px;border-bottom:1px solid #f5f5f5;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tname{font-weight:700;color:#111}
+.twatch{color:#0369a1}
+.tprice{color:#166534;font-weight:600}
+.tstatus{font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px}
+.ts-hot{background:#fee2e2;color:#dc2626}
+.ts-warm{background:#fef3c7;color:#d97706}
+.ts-vip{background:#ede9fe;color:#7c3aed}
+.ts-complex{background:#dbeafe;color:#2563eb}
+
+.page-footer{text-align:center;padding:20px;font-size:11px;color:#999}
+</style>
+</head>
+<body>
+
+<div class="wa-header">
+  <h1>📊 YM Watches — Template de Oportunidades</h1>
+  <div class="sub">Template com dados fictícios — substitua com seu pipeline real</div>
+  <div class="stats-row">
+    <div class="stat"><span>6</span>Time-Delayed</div>
+    <div class="stat"><span>5</span>Negoc. Abertas</div>
+    <div class="stat"><span>4</span>Preço Frio</div>
+    <div class="stat"><span>4</span>Rapport</div>
+    <div class="stat"><span>5</span>Alcoforado</div>
+    <div class="stat"><span>24</span>Total</div>
+  </div>
+</div>
+
+<!-- SUMMARY TABLE -->
+<div class="summary-table">
+  <div class="st-header">🔝 Top 10 — Prioridade de Ação Hoje</div>
+  <table>
+    <tr><th>#</th><th>Contato</th><th>Relógio</th><th>Preço</th><th>Última Msg</th><th>Status</th></tr>
+    <tr><td>1</td><td class="tname">João Silva</td><td class="twatch">Relógio Modelo X + R$99k</td><td class="tprice">R$180k / aberto</td><td>1 Jan 26</td><td><span class="tstatus ts-hot">🔴 HOT</span></td></tr>
+    <tr><td>2</td><td class="tname">Maria Oliveira</td><td class="twatch">Produto Premium Y</td><td class="tprice">5 fig BRL</td><td>15 Dez 25</td><td><span class="tstatus ts-vip">👑 VIP</span></td></tr>
+    <tr><td>3</td><td class="tname">Pedro Souza</td><td class="twatch">Relógio Coleção Z 40mm</td><td class="tprice">~R$750k</td><td>2 Jan 26</td><td><span class="tstatus ts-hot">⏰ URGENTE</span></td></tr>
+    <tr><td>4</td><td class="tname">Ana Lima</td><td class="twatch">Modelo Misto 2021</td><td class="tprice">R$40k gap</td><td>3 Jan 26</td><td><span class="tstatus ts-hot">💬 SEM RESP</span></td></tr>
+    <tr><td>5</td><td class="tname">Carlos Ferreira</td><td class="twatch">Produto A → Produto B R$220k</td><td class="tprice">Mediação</td><td>20 Dez 25</td><td><span class="tstatus ts-complex">🔁 COMPLEX</span></td></tr>
+    <tr><td>6</td><td class="tname">Fernanda Costa</td><td class="twatch">Relógio Série Limitada</td><td class="tprice">~R$120k negociar</td><td>10 Dez 25</td><td><span class="tstatus ts-warm">⏰ MARÇO</span></td></tr>
+    <tr><td>7</td><td class="tname">Ricardo Alves</td><td class="twatch">Modelo Rosa + Produto C</td><td class="tprice">R$45k aberto</td><td>5 Jan 26</td><td><span class="tstatus ts-warm">🟡 WARM</span></td></tr>
+    <tr><td>8</td><td class="tname">Juliana Rocha</td><td class="twatch">Produto Premium Grande 2024</td><td class="tprice">R$130k</td><td>28 Dez 25</td><td><span class="tstatus ts-warm">📦 ENTREGA?</span></td></tr>
+    <tr><td>9</td><td class="tname">Marcos Pereira</td><td class="twatch">Relógio Bicolor 2023</td><td class="tprice">Troca + R$10k</td><td>10 Nov 25</td><td><span class="tstatus ts-warm">😍 QUER</span></td></tr>
+    <tr><td>10</td><td class="tname">Beatriz Santos</td><td class="twatch">Modelo Clássico 41mm</td><td class="tprice">até R$50k</td><td>12 Dez 25</td><td><span class="tstatus ts-warm">⏰ MARÇO</span></td></tr>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TIME-DELAYED CLOSES -->
+<!-- ============================================================ -->
+<div class="section">
+<details open>
+<summary>
+<div class="section-label s-red">
+  <span>🔴 Time-Delayed Closes <span style="font-size:11px;opacity:.8">— prometeu voltar, janela ativa</span></span>
+  <span><span class="cnt">6 contatos</span> <span class="arrow">▼</span></span>
+</div>
+</summary>
+
+<!-- CARD: Contato VIP 1 -->
+<div class="card">
+  <div class="urgency-banner">⚠️ DROPPED BALL — VIP comprador, prometeu retornar em data futura. Meses sem contato.</div>
+  <div class="card-header">
+    <div class="avatar av-purple">M</div>
+    <div class="card-meta">
+      <div class="contact-name">Maria Oliveira</div>
+      <div class="last-active">Última msg: 15 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000001" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-purple">VIP REPEAT</span><span class="badge b-red">PRODUTO PENDENTE</span><span class="badge b-grey">São Paulo</span></div>
+    </div>
+    <div class="urgency-dot dot-red"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Maria Oliveira</div>
+        Tudo certo. Vamos pensar no Relógio Modelo X pra início do ano.
+        <div class="ts">01 Dez 25 • 18:30</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Maria Oliveira</div>
+        É o presente de aniversário do meu sócio. Vai ter muita gente importante no evento.
+        <div class="ts">30 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Maria Oliveira</div>
+        Boas festas pra você e sua família. Abraço!
+        <div class="ts">15 Dez 25 • última msg</div>
+      </div>
+    </div>
+    <div class="section-date"><span>meses de silêncio ↓</span></div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Relógio Modelo X — a definir</span>
+    <span class="wmeta wm-price">Budget: 5 dígitos BRL</span>
+    <span class="wmeta wm-time">Prometeu: início do ano</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — produto prometido em data futura, nunca aconteceu</div>
+      <div class="opp-angle">VIP de alto valor, comprador recorrente, frequenta ambientes de alto padrão. A data passou — reabrir com modelo específico, não ping genérico.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Maria, sumimos depois das festas! O Relógio Modelo X que a gente ia pensar — ainda está na cabeça? Tenho algumas opções que acho que te servem bem.</div>
+  </div>
+</div>
+
+<!-- CARD: Contato com janela de viagem -->
+<div class="card">
+  <div class="urgency-banner">⏰ JANELA FECHA EM ~2 SEMANAS — viagem marcada para o exterior</div>
+  <div class="card-header">
+    <div class="avatar av-teal">P</div>
+    <div class="card-meta">
+      <div class="contact-name">Colecionador Série Z — Pedro Souza</div>
+      <div class="last-active">Última msg: 2 Jan 2026 • <a href="https://web.whatsapp.com/send?phone=5511900000002" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">SÉRIE Z</span><span class="badge b-red">VIAGEM JAN</span><span class="badge b-green">ALTA TICKET</span></div>
+    </div>
+    <div class="urgency-dot dot-red"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Queria o modelo preto, simples ou edição especial. Automático ou perpétuo.
+        <div class="ts">20 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        O Modelo Z é o preto então? 40mm? Completo? Quanto fica em R$?
+        <div class="ts">21 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Modelo Z Edição Especial Preta 40mm — R$750k (base câmbio atual). Zero, completo.
+        <div class="ts">21 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Se tiver disponível lá, gostaria de experimentar sim
+        <div class="ts">28 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Final de janeiro estarei viajando 🌍
+        <div class="ts">02 Jan 26 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Relógio Modelo Z Edição Preta 40mm</span>
+    <span class="wmeta wm-price">~R$750k / ~R$150k USD</span>
+    <span class="wmeta wm-time">Janela: final de janeiro — viagem</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — viagem no fim do mês, janela de experimentar in loco</div>
+      <div class="opp-angle">Interesse declarado em experimentar pessoalmente. Se tiver contato no destino ou peça disponível — janela se fecha com a viagem acontecendo.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Final de janeiro chegando — vou arrumar o Modelo Z pra você botar no pulso. Quando exatamente você viaja?</div>
+  </div>
+</div>
+
+<!-- CARD: Contato com prazo de compra -->
+<div class="card">
+  <div class="urgency-banner orange">⏰ MARÇO EM 2 SEMANAS — pedido explícito "queria pra março"</div>
+  <div class="card-header">
+    <div class="avatar av-blue">F</div>
+    <div class="card-meta">
+      <div class="contact-name">Fernanda Costa</div>
+      <div class="last-active">Última msg: 10 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000003" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">SÉRIE LIMITADA</span><span class="badge b-orange">MARÇO</span></div>
+    </div>
+    <div class="urgency-dot dot-orange"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Estou querendo um Produto Premium Y
+        <div class="ts">09 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Queria pra março / Tem disponível ou previsão?
+        <div class="ts">09 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Tô interessada nesse / Estando em bom estado e completo / Serve (ano recente)
+        <div class="ts">09 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Não apostaria que o preço cai / Mas é uma oportunidade boa / Vou buscar aqui.
+        <div class="ts">10 Dez 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Produto Premium Y</span>
+    <span class="wmeta wm-price">~R$120k / negociar</span>
+    <span class="wmeta wm-time">Prazo: Março 2026</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — Março explícito, produto raramente aparece</div>
+      <div class="opp-angle">Disse "surgindo uma oportunidade me fala" — está esperando sinal. Entrar com atualização de busca ou peça próxima em valor.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Fernanda, março chegando e o Produto Premium Y ainda no radar — surgiu uma oportunidade muito boa aqui. Posso te mandar?</div>
+  </div>
+</div>
+
+<!-- CARD: Contato com data combinada -->
+<div class="card">
+  <div class="urgency-banner orange">⏰ MARÇO — "combinado?" ele perguntou, você confirmou</div>
+  <div class="card-header">
+    <div class="avatar av-green">B</div>
+    <div class="card-meta">
+      <div class="contact-name">Beatriz Santos</div>
+      <div class="last-active">Última msg: 12 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000004" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-green">PRIMEIRO RELÓGIO</span><span class="badge b-orange">MARÇO</span></div>
+    </div>
+    <div class="urgency-dot dot-orange"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Comecei de um ano pra cá comprando relógio de entrada... depois fui pra intermediário... quero partir pra um de qualidade
+        <div class="ts">01 Set 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Busco algo mais na faixa de até 50k. Vi que a maioria dos anuncios está na faixa de 120-150.
+        <div class="ts">08 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Busco pra você. A maioria está nessa faixa mesmo. Mas tenho muitos disponíveis até 50k 👊🏽
+        <div class="ts">10 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Em março devo procurar outro, ai ja falo ctg. Combinado?
+        <div class="ts">12 Dez 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Modelo Clássico 41mm</span>
+    <span class="wmeta wm-price">Budget: até R$50k</span>
+    <span class="wmeta wm-time">Prazo: Março 2026</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — Março acordado, escada entrada→intermediário→qualidade completa</div>
+      <div class="opp-angle">Novo colecionador subindo a escada. Modelo Clássico 41mm é o próximo degrau natural. Chega com modelo específico no orçamento — ele precisa sentir que é uma escolha certa, não só barata.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Beatriz, março chegou — tenho um Modelo Clássico 41mm aqui no precinho certo pra você. Bora?</div>
+  </div>
+</div>
+
+<!-- CARD: Contato com troca pendente -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-green">M</div>
+    <div class="card-meta">
+      <div class="contact-name">Marcos Pereira</div>
+      <div class="last-active">Última msg: 10 Nov 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000005" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">MODELO BICOLOR</span><span class="badge b-grey">TROCA</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Cara, to louco pelo Modelo Bicolor…
+        <div class="ts">20 Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Cara, tava querendo trocar o meu atual pelo Bicolor… será que conseguiria ajudar?
+        Tenho: Relógio A, Relógio B 2022, Relógio C 2019, Relógio D
+        <div class="ts">25 Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Tenho seu Bicolor 2023, zero. Você dando esse e mais 10k — fechado.
+        <div class="ts">26 Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Tô querendo dar 5k de troco…
+        <div class="ts">28 Out 25 • última negoc.</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Modelo Bicolor 2023 Zero</span>
+    <span class="wmeta wm-price">Produto atual + R$10k (pede R$5k)</span>
+    <span class="wmeta wm-time">Gap: R$5k</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — meses frio, gap de só R$5k</div>
+      <div class="opp-angle">Ele ainda tem o produto de troca. O desejo pelo Bicolor era alto. Entrada por "ficou com seu nome" cria senso de urgência sem pressão.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Fala! Seu Relógio C ainda tá com você? Apareceu um Bicolor aqui que ficou com o seu nome.</div>
+  </div>
+</div>
+
+<!-- CARD: Contato aguardando viagem -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-orange">R</div>
+    <div class="card-meta">
+      <div class="contact-name">Roberto Nascimento</div>
+      <div class="last-active">Última msg: Out 2025 • <span class="wa-lid">💬 111111111111111@lid</span></div>
+      <div class="badges"><span class="badge b-orange">PRODUTO DESTAQUE</span><span class="badge b-grey">VIAGEM/EXTERIOR</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Comprei um recentemente e queria um Produto Destaque agora
+        <div class="ts">Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Mas quero ver primeiro em viagem em dezembro fora. Se não encontrar compro aqui.
+        <div class="ts">Out 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Produto Destaque (ref recente)</span>
+    <span class="wmeta wm-price">~R$130.000+</span>
+    <span class="wmeta wm-time">Dezembro já passou — follow-up</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">⏰ Time-Delayed Close — Dezembro passou, pode ter comprado fora</div>
+      <div class="opp-angle">Se não encontrou lá fora, ainda precisa. Colecionador ativo — comprou recente, pipeline declarado.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Roberto, o Produto Destaque apareceu lá fora? Surgiu um aqui com o seu perfil — antes de você ir buscar em outro lugar.</div>
+  </div>
+</div>
+
+</details>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: INCOMPLETE NEGOTIATIONS -->
+<!-- ============================================================ -->
+<div class="section">
+<details open>
+<summary>
+<div class="section-label s-yellow">
+  <span>🟡 Negociações Incompletas <span style="font-size:11px;opacity:.8">— preço discutido, interesse confirmado, silêncio</span></span>
+  <span><span class="cnt">5 contatos</span> <span class="arrow">▼</span></span>
+</div>
+</summary>
+
+<!-- CARD: Negociação HOT ativa -->
+<div class="card">
+  <div class="urgency-banner">🔥 HOT — Thread aberta recentemente, perguntou preço e não teve resposta final</div>
+  <div class="card-header">
+    <div class="avatar av-green">J</div>
+    <div class="card-meta">
+      <div class="contact-name">João Silva</div>
+      <div class="last-active">Última msg: 1 Jan 2026 • <a href="https://web.whatsapp.com/send?phone=5511900000006" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-red">ACTIVE THREAD</span><span class="badge b-orange">PRODUTO R$180k</span><span class="badge b-blue">R$99k USD</span></div>
+    </div>
+    <div class="urgency-dot dot-red"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        O preço é 180 correto? / Pedi desconto e pedi parcelamento 5x
+        <div class="ts">10 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        175 no pix. Por mim não tem juros nenhum pra você.
+        <div class="ts">10 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Cara, tô pensando aqui. Bem balançado kkk
+        <div class="ts">11 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Quanto está o produto? Faz um preço bom
+        <div class="ts">01 Jan 26 ← ainda ativo</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        99k usd / Zero / Novíssimo / Só não compra se estiver sem dinheiro 🤣
+        <div class="ts">01 Jan 26</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto Modelo X / R$99k USD</span>
+    <span class="wmeta wm-price">R$175-180k / R$99k USD</span>
+    <span class="wmeta wm-time">Thread ativa — dias recentes</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">🟡 Negociação Incompleta — perguntou preço recentemente, aguarda resposta real</div>
+      <div class="opp-angle">Thread mais quente da lista. João perguntou "Faz um preço bom" — fechar o loop agora. Propor valor pix ou alternativa concreta, ele fecha no impulso.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de fechamento sugerida</div>
+    <div class="send-bubble">João, aquele produto tá esperando resposta sua kkk — topa 99k pix ou prefiro te mandar opção diferente?</div>
+  </div>
+</div>
+
+<!-- CARD: Negociação com gap de preço -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-blue">D</div>
+    <div class="card-meta">
+      <div class="contact-name">Diego Martins</div>
+      <div class="last-active">Última msg: 20 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000007" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">PRODUTO Z-01</span><span class="badge b-orange">GAP R$10k</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Diego</div>
+        Se caso mude de ideia, a proposta de 95k continua de pé
+        <div class="ts">01 Jul 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Se vc achar nesse preço… eu quero 10. É o mínimo — 105k.
+        <div class="ts">01 Jul 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Diego</div>
+        Qual valor do Produto Z-01 que você postou no grupo?
+        <div class="ts">05 Dez 25 — voltou a perguntar</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        2,59 câmbio / Zero / 2024 irmão
+        <div class="ts">05 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Diego</div>
+        [áudio]
+        <div class="ts">20 Dez 25 • última msg sem resposta</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto Z-01 / Produto Z-02 / Produto Z-03</span>
+    <span class="wmeta wm-price">R$95k (deles) vs R$105k (YM)</span>
+    <span class="wmeta wm-time">Gap: R$10k — meses</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">🟡 Negociação Incompleta — gap de R$10k, enviou áudio sem resposta</div>
+      <div class="opp-angle">Gap pequeno em relação ao ticket. Mercado pode ter movido. Entrar com uma peça próxima ao orçamento deles para criar anchor.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Diego, Produto Z-01 ainda no radar? Surgiu uma oportunidade aqui que pode te interessar.</div>
+  </div>
+</div>
+
+<!-- CARD: Deal complexo (vende para comprar) -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-purple">C</div>
+    <div class="card-meta">
+      <div class="contact-name">Carlos Ferreira</div>
+      <div class="last-active">Última msg: 20 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000008" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-purple">DEAL COMPLEXO</span><span class="badge b-blue">PRODUTO A → PRODUTO B</span></div>
+    </div>
+    <div class="urgency-dot dot-orange"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Carlos</div>
+        Boa noite, qual valor? Qual ano e é o modelo grande? (Produto A 2020 R$160k)
+        <div class="ts">01 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Meu interesse é que você venda no melhor preço pra que você leve esse Produto B
+        <div class="ts">18 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Carlos</div>
+        Não entendi mto bem, vc recebeu oferta pra vender esse aí por 130?
+        <div class="ts">19 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Comprar! 💪
+        <div class="ts">20 Dez 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto A 2020 (vender) → Produto B R$220k</span>
+    <span class="wmeta wm-price">Produto A custo R$150k / Produto B R$220k</span>
+    <span class="wmeta wm-time">semanas sem update</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">🟡 Deal Complexo — Carlos precisa vender Produto A para comprar Produto B</div>
+      <div class="opp-angle">Ele está motivado (Produto A incomoda no pulso, carregando há anos). Você é o intermediário. Se tiver comprador para o Produto A dele, o Produto B desbloqueia.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Carlos, como tá? Tô tentando fechar um comprador pro seu Produto A — precisava confirmar uns detalhes contigo. Tem dois minutos?</div>
+  </div>
+</div>
+
+<!-- CARD: Negociação com entrega prometida -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-orange">J</div>
+    <div class="card-meta">
+      <div class="contact-name">Juliana Rocha</div>
+      <div class="last-active">Última msg: 28 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000009" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-orange">PRODUTO GRANDE 2024</span><span class="badge b-grey">ENTREGA JAN 10?</span></div>
+    </div>
+    <div class="urgency-dot dot-orange"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Juliana</div>
+        Tô tentada! É 2024? Grande? / Consegue dividir nesse valor?
+        <div class="ts">28 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Grande 2024 / Ouro rosa 🔥
+        <div class="ts">28 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        Até dia 10 te entrego 👊
+        <div class="ts">28 Dez 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto Premium Grande Ouro Rosa 2024</span>
+    <span class="wmeta wm-price">R$130k</span>
+    <span class="wmeta wm-time">Entrega prometida: 10 Jan — passou</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">🟡 Negociação Incompleta — entrega prometida, pagamento confirmado?</div>
+      <div class="opp-angle">Juliana perguntou sobre parcelamento mas não houve confirmação de fechamento. Verificar se pagamento veio. Data de entrega já passou.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de follow-up sugerida</div>
+    <div class="send-bubble">Juliana, tudo certo com o Grande? Estava pensando em você — já acertou como vai pagar ou ainda está pensando?</div>
+  </div>
+</div>
+
+<!-- CARD: Negociação sensível a preço -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-teal">L</div>
+    <div class="card-meta">
+      <div class="contact-name">Luciana Mendes</div>
+      <div class="last-active">Última msg: 15 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000010" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">MODELO ESPECIAL</span><span class="badge b-grey">PRICE SENSITIVE</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        [imagem] Modelo Especial — R$150k
+        <div class="ts">01 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Luciana</div>
+        Esse é o especial??
+        <div class="ts">01 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Luciana</div>
+        Vou aguardar um pouco
+        <div class="ts">03 Nov 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Luciana</div>
+        Meu Deus é bem salgado — bem acima do que eu esperava
+        <div class="ts">10 Dez 25</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Modelo Especial / Produto Alternativo</span>
+    <span class="wmeta wm-price">R$39.000 Especial / R$22.500 Alternativo</span>
+    <span class="wmeta wm-time">Natal — meses frio</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">🟡 Negociação Fria — sensível a preço, tem coleção variada</div>
+      <div class="opp-angle">Colecionador em expansão abrindo para produto novo. Achar peça alternativa na faixa correta com mais razão de ser do que o que ela achou caro.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Luciana, bom dia! Sumimos desde o Natal — tô com um Produto Alternativo na mão que acho que vai fazer mais sentido pra você. Posso te mandar?</div>
+  </div>
+</div>
+
+</details>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PRICE GONE COLD -->
+<!-- ============================================================ -->
+<div class="section">
+<details>
+<summary>
+<div class="section-label s-money">
+  <span>💰 Preço Frio <span style="font-size:11px;opacity:.8">— preço foi o último assunto, depois silêncio</span></span>
+  <span><span class="cnt">4 contatos</span> <span class="arrow">▼</span></span>
+</div>
+</summary>
+
+<!-- CARD: Mensagem sem resposta -->
+<div class="card">
+  <div class="urgency-banner green">💬 MENSAGEM RECENTE SEM RESPOSTA — "Qual valor?"</div>
+  <div class="card-header">
+    <div class="avatar av-teal">A</div>
+    <div class="card-meta">
+      <div class="contact-name">Ana Lima (sem nome salvo)</div>
+      <div class="last-active">Última msg: 3 Jan 2026 (sem resposta) • <a href="https://web.whatsapp.com/send?phone=5511900000011" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-green">MODELO MISTO 2021</span><span class="badge b-grey">VENDEDOR/COMPRADOR</span></div>
+    </div>
+    <div class="urgency-dot dot-red"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Modelo Misto 2021, Completo
+        <div class="ts">28 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        43k
+        <div class="ts">28 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Ou chega nos 40 avista… Pensar aqui…
+        <div class="ts">29 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Qual valor?
+        <div class="ts">03 Jan 26 • SEM RESPOSTA</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Modelo Misto 2021 Completo</span>
+    <span class="wmeta wm-price">R$42k (chão) vs R$40k (deles)</span>
+    <span class="wmeta wm-time">Mensagem recente sem resposta</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">💰 Preço Frio — gap de R$2k, mensagem ignorada</div>
+      <div class="opp-angle">Fechar o gap agora ou usar a troca como lever. Ela também quer outro produto — pode ser a entrada de um deal maior.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de fechamento sugerida</div>
+    <div class="send-bubble">Irmã, 41k avista no Modelo Misto e a gente fecha hoje. Posso botar em troca também se aparecer alguma coisa boa pra você.</div>
+  </div>
+</div>
+
+<!-- CARD: Comprador de alta frequência -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-purple">R</div>
+    <div class="card-meta">
+      <div class="contact-name">Ricardo Alves</div>
+      <div class="last-active">Última msg: 5 Jan 2026 • <a href="https://web.whatsapp.com/send?phone=5511900000012" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-purple">MODELO ROSA</span><span class="badge b-orange">MULTI-THREAD</span><span class="badge b-grey">NEGOCIA SEMPRE</span></div>
+    </div>
+    <div class="urgency-dot dot-orange"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Ricardo</div>
+        Qual valor? (Modelo Rosa 2025, ref nova)
+        <div class="ts">02 Jan 26</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        45k 👊
+        <div class="ts">05 Jan 26 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Modelo Rosa 2025 / Produto C / Produto D</span>
+    <span class="wmeta wm-price">R$45k Rosa / R$60.000 Produto C / R$92.500 Produto D</span>
+    <span class="wmeta wm-time">semanas sem resposta</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">💰 Preço Frio — mandou R$45k no Modelo Rosa, nunca confirmou</div>
+      <div class="opp-angle">Comprador de alta frequência, negocia em múltiplas peças em paralelo. Tem Produto C e Produto D como desejos maiores. Ping direto sem rodeio.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de follow-up sugerida</div>
+    <div class="send-bubble">Irmão, ficou no 45 do Modelo Rosa? Tô com coisa nova na mão também — te mando.</div>
+  </div>
+</div>
+
+<!-- CARD: Pressão de caixa resolvida -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-green">S</div>
+    <div class="card-meta">
+      <div class="contact-name">Sandra Oliveira</div>
+      <div class="last-active">Última msg: 15 Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000013" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-green">PRODUTO A / PRODUTO B</span><span class="badge b-grey">GAP DE PREÇO</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Sandra</div>
+        Dúvida entre Produto A e Produto B. Pulso maior, modelo menor fica pequeno.
+        <div class="ts">10 Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Sandra</div>
+        Tenho R$60k separado, mas preciso fechar negócio antes de investir nisso
+        <div class="ts">10 Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Sandra</div>
+        [imagem Produto B no pulso]
+        <div class="ts">15 Dez 25 • última msg</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto A fundo escuro / Produto B</span>
+    <span class="wmeta wm-price">Quer ~R$60k / YM tinha R$80k</span>
+    <span class="wmeta wm-time">Pressão de caixa fim de ano — resolvida</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">💰 Preço Frio — gap de preço e pressão de caixa bloquearam</div>
+      <div class="opp-angle">Obrigações de fim de ano já passaram. Entrar com Produto B próximo de R$60-70k — pulso grande é o filtro importante.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Fala Sandra! O ano passou voando — como foi? Tô com um Produto A na mão que encaixa bem no que você tava buscando. Posso te mandar?</div>
+  </div>
+</div>
+
+<!-- CARD: Presente para familiar -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-blue">T</div>
+    <div class="card-meta">
+      <div class="contact-name">Tiago Barbosa</div>
+      <div class="last-active">Última msg: Dez 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000014" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">PRESENTE FAMÍLIA</span><span class="badge b-grey">~R$53k</span></div>
+    </div>
+    <div class="urgency-dot dot-yellow"></div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Tiago</div>
+        To querendo dar um pra minha esposa rsrs
+        <div class="ts">01 Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row sent">
+      <div class="bubble sent">
+        53k 🔥 Zero, feminino, perfeito pra ela
+        <div class="ts">Dez 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Tiago</div>
+        Amanhã te dou um salve / Ver o 'time' do fluxo
+        <div class="ts">Dez 25 • nunca voltou</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Produto feminino (gift)</span>
+    <span class="wmeta wm-price">~R$53k</span>
+    <span class="wmeta wm-time">"Amanhã" virou meses</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">💡</div>
+    <div class="opp-text">
+      <div class="opp-title">💰 Preço Frio — queria presentear esposa, sumiu depois do "amanhã te dou salve"</div>
+      <div class="opp-angle">Intenção clara (presentear esposa) — pode ainda não ter comprado. Chegar com urgência suave: "Esse não fica muito tempo."</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Linha de reabertura sugerida</div>
+    <div class="send-bubble">Tiago, o time do fluxo bateu? Aquele relógio pra esposa tá esperando — não fica muito tempo aqui.</div>
+  </div>
+</div>
+
+</details>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: RAPPORT CAPITAL -->
+<!-- ============================================================ -->
+<div class="section">
+<details>
+<summary>
+<div class="section-label s-blue">
+  <span>💬 Capital de Relacionamento <span style="font-size:11px;opacity:.8">— detalhes pessoais, vida, conexões</span></span>
+  <span><span class="cnt">4 contatos</span> <span class="arrow">▼</span></span>
+</div>
+</summary>
+
+<!-- CARD: Contato com círculo social de alto padrão -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-purple">M</div>
+    <div class="card-meta">
+      <div class="contact-name">Maria Oliveira — Círculo Elite</div>
+      <div class="last-active">Interior SP • <a href="https://web.whatsapp.com/send?phone=5511900000001" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-purple">ELITE SOCIAL</span><span class="badge b-green">VIP REPEAT</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Maria Oliveira</div>
+        É o aniversário do meu sócio no sítio dele. Ali vai ter muuuito relógio.
+        <div class="ts">01 Dez 25 — sinal de ambiente</div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">💬 Rapport — frequenta eventos de alto padrão, move nas rodas certas</div>
+      <div class="opp-angle">Alcoforado: infraestrutura simbólica. O ambiente onde Maria se move exige presença correta. Produto Premium = passaporte social para esse círculo.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Maria, como foi o aniversário do seu sócio? Guardei um produto aqui que acho que vai bem com essa frequência.</div>
+  </div>
+</div>
+
+<!-- CARD: Contato em transição de carreira -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-blue">F</div>
+    <div class="card-meta">
+      <div class="contact-name">Fábio Neves — Transição de Carreira</div>
+      <div class="last-active">Última msg: Out 2025 • <span class="wa-lid">💬 222222222222222@lid</span></div>
+      <div class="badges"><span class="badge b-blue">NOVA LIDERANÇA</span><span class="badge b-orange">ENTRY COLLECTOR</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Em janeiro assumi uma posição de alta liderança na empresa e comecei a conviver com muita gente importante... comecei a me interessar mais em produtos de alto valor visando networking.
+        <div class="ts">Set 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Hoje tenho apenas de herança: meu pai deixou um Produto X e um Produto Y
+        <div class="ts">Set 25</div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">💬 Rapport — Nova liderança → aprendendo os códigos do poder</div>
+      <div class="opp-angle">Clássico Alcoforado: herança simbólica (Produto X + Produto Y do pai) + nova posição + convivência nova = momento de construir infraestrutura própria. Ângulo do advisor, não vendedor.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada — advisor tone</div>
+    <div class="send-bubble">Fábio, quando você me contou sobre a nova posição fiquei pensando — tem algumas escolhas que fazem sentido pro ambiente que você tá entrando. Posso te ajudar a pensar nisso?</div>
+  </div>
+</div>
+
+<!-- CARD: Colecionador eclético -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-orange">R</div>
+    <div class="card-meta">
+      <div class="contact-name">Renato Gomes</div>
+      <div class="last-active">Out 2025 • <span class="wa-lid">💬 333333333333333@lid</span></div>
+      <div class="badges"><span class="badge b-orange">COLEÇÃO ECLÉTICA</span><span class="badge b-grey">UPGRADER</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Renato</div>
+        Minha coleção é ecletica. E quero aproximar mais do mercado e entender mais pra ver qual rumo seguir / As vezes tirar volume, e melhorar a qualidade pode ser um caminho.
+        <div class="ts">Out 25</div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">💬 Rapport — Colecionador eclético querendo upgrade de qualidade</div>
+      <div class="opp-angle">Está em momento de curação. "Tirar volume, melhorar qualidade" = comprador e vendedor. Double opportunity. Posicionar-se como advisor de coleção.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Renato, você falou em tirar volume e subir qualidade — tive uma peça aqui que acho que se encaixa exatamente nisso. Quer ver?</div>
+  </div>
+</div>
+
+<!-- CARD: Colecionador vintage -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-purple">S</div>
+    <div class="card-meta">
+      <div class="contact-name">Sérgio Moreira — Colecionador Vintage</div>
+      <div class="last-active">Out 2025 • <span class="wa-lid">💬 444444444444444@lid</span></div>
+      <div class="badges"><span class="badge b-purple">VINTAGE EXPERT</span><span class="badge b-grey">LORE PROFUNDO</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Minha coleção tem alguns itens vintage. Um modelo muito raro dos anos 60. Mas o que mais me atrai são os anos 90 em ouro em séries limitadas.
+        <div class="ts">Out 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Existe uma história interessante sobre esse modelo — criou uma superstição entre colecionadores sérios...
+        <div class="ts">Out 25 — lore compartilhado</div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">💬 Rapport — Vintage expert, compartilhou lore exclusivo do segmento</div>
+      <div class="opp-angle">Está saindo de muita coisa que "nunca vai usar". Double opportunity: comprar peças dele + vender algo mais focado. Conexão via conhecimento raro.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Sérgio, aquela história ficou na minha cabeça. Você me disse que estava saindo de algumas peças — o que está disponível?</div>
+  </div>
+</div>
+
+</details>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: ALCOFORADO ANGLES -->
+<!-- ============================================================ -->
+<div class="section">
+<details>
+<summary>
+<div class="section-label s-purple">
+  <span>🎯 Ângulos Alcoforado <span style="font-size:11px;opacity:.8">— infraestrutura simbólica, passaporte social, status em construção</span></span>
+  <span><span class="cnt">5 contatos</span> <span class="arrow">▼</span></span>
+</div>
+</summary>
+
+<!-- CARD: Status buyer explícito -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-purple">P</div>
+    <div class="card-meta">
+      <div class="contact-name">Paulo Brandão — Palestrante / Mentor</div>
+      <div class="last-active">Nov 2025 • <span class="wa-lid">💬 555555555555555@lid</span></div>
+      <div class="badges"><span class="badge b-purple">STATUS EXPLÍCITO</span><span class="badge b-blue">PIPELINE: PRODUTO A + PRODUTO B</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Eu palestro muito em ambiente de mentoria, as pessoas são de um padrão alto e a gente precisa de usar recursos para nos diferenciarmos / relógio cumpre esse papel
+        <div class="ts">Nov 25 — Alcoforado puro</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Eu tô fazendo dois investimentos grandes no meu negócio... Mas tudo dando certo eu quero comprar ano que vem um Produto A... depois um Produto B de alto nível
+        <div class="ts">Nov 25</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Produto A → Produto B</span>
+    <span class="wmeta wm-price">Pipeline declarado 2+ anos</span>
+    <span class="wmeta wm-time">Aguardando investimento fechar</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">🎯 Alcoforado — Infraestrutura Simbólica declarada: "relógio cumpre esse papel"</div>
+      <div class="opp-angle">Ele articulou a teoria sem saber. Pipeline de 2+ anos declarado. Nurture agora — quando o investimento fechar, ele compra. Produto A como primeiro passo.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Paulo, como estão os investimentos? Você falou no Produto A — apareceu um aqui que vai ser difícil encontrar nesse nível depois.</div>
+  </div>
+</div>
+
+<!-- CARD: Colecionador de alto nível -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-blue">A</div>
+    <div class="card-meta">
+      <div class="contact-name">Alexandre Tavares</div>
+      <div class="last-active">Set 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000015" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-blue">3 Produto X</span><span class="badge b-blue">2 Produto Y</span><span class="badge b-orange">EDIÇÃO OURO</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Alexandre</div>
+        Comprei recentemente edição ouro branco / Tenho três Produto X / Tenho dois Produto Y
+        <div class="ts">Set 25 — coleção declarada</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">3× Produto X, 2× Produto Y, Edição Ouro</span>
+    <span class="wmeta wm-price">Colecionador ultra high-net-worth</span>
+    <span class="wmeta wm-time">Última transação: Set 25</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">🎯 Alcoforado — Collection Builder elite, 5+ peças de alto valor</div>
+      <div class="opp-angle">Com essa coleção, o próximo move é um produto raro ou de alto impacto. Ou uma peça que "falta" — identificar o gap e propor o upgrade.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Alexandre, com 3 Produto X e 2 Produto Y — tô com algo que acho que completa muito bem o que você tem. Posso te mandar?</div>
+  </div>
+</div>
+
+<!-- CARD: Colecionador de alta frequência -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-green">G</div>
+    <div class="card-meta">
+      <div class="contact-name">Gustavo Ribeiro</div>
+      <div class="last-active">Out 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000016" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-green">4 PRODUTOS/ANO</span><span class="badge b-purple">DESEJO DECLARADO</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Gustavo</div>
+        Esse ano ja comprei 4 produtos / ficou faltando um Produto Z
+        <div class="ts">Set 25</div>
+      </div>
+    </div>
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">Gustavo</div>
+        Tá faltando aqui na coleção
+        <div class="ts">Out 25 — desejo declarado</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">🎯 Produto Z de alto nível</span>
+    <span class="wmeta wm-price">4 produtos em 2025</span>
+    <span class="wmeta wm-time">Desejo declarado — Out 25</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">🎯 Alcoforado — Colecionador de alta frequência com desejo explícito de Produto Z</div>
+      <div class="opp-angle">4 produtos por ano = compra com padrão. Produto Z = "falta na coleção" (coleção builder consciente). Engajar com qualquer Produto Z disponível.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de entrada</div>
+    <div class="send-bubble">Gustavo, ainda tá faltando o Produto Z? Apareceu um aqui — te mando?</div>
+  </div>
+</div>
+
+<!-- CARD: Passaporte cultural / presente especial -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-orange">J</div>
+    <div class="card-meta">
+      <div class="contact-name">João Silva — Presente Comemorativo do Filho</div>
+      <div class="last-active">Mai 2025 • <a href="https://web.whatsapp.com/send?phone=5511900000006" target="_blank" class="wa-link">💬 WhatsApp</a></div>
+      <div class="badges"><span class="badge b-orange">DATA ESPECIAL</span><span class="badge b-purple">PASSAPORTE CULTURAL</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        <div class="sender">João</div>
+        Tô querendo comprar um relógio pro aniversário do meu filho
+        <div class="ts">Mai 25 — passaporte cultural</div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">🎯 Alcoforado — Data comemorativa: passaporte cultural de elite + presente simbólico</div>
+      <div class="opp-angle">Além do deal atual — João tem um filho e uma ocasião especial. Relógio de data marcante = passagem com objeto certo. Forte ângulo emocional.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo complementar (além do deal principal)</div>
+    <div class="send-bubble">João, o aniversário do seu filho já passou ou ainda vem? Guardei uma ideia de presente pra aquele momento — quando for, me lembra.</div>
+  </div>
+</div>
+
+<!-- CARD: Presente de alto valor para familiar -->
+<div class="card">
+  <div class="card-header">
+    <div class="avatar av-teal">L</div>
+    <div class="card-meta">
+      <div class="contact-name">Leonardo Figueiredo</div>
+      <div class="last-active">Jun 2025 • <span class="wa-lid">💬 666666666666666@lid</span></div>
+      <div class="badges"><span class="badge b-green">PRESENTE ALTO VALOR</span><span class="badge b-purple">FAMILIAR</span></div>
+    </div>
+  </div>
+  <div class="chat-area">
+    <div class="bubble-row recv">
+      <div class="bubble recv">
+        Eu queria dar pro meu irmão de aniversário
+        <div class="ts">Jun 25 — sobre peça de alto valor</div>
+      </div>
+    </div>
+  </div>
+  <div class="watch-meta">
+    <span class="wmeta wm-watch">Peça ~R$92.500 (gift)</span>
+    <span class="wmeta wm-price">R$92.500 — presente para familiar</span>
+    <span class="wmeta wm-time">Jun 25 — aniversário passou?</span>
+  </div>
+  <div class="opp-label">
+    <div class="opp-icon">🎯</div>
+    <div class="opp-text">
+      <div class="opp-title">🎯 Alcoforado — Gifting de alto valor = capital simbólico e relacional</div>
+      <div class="opp-angle">Quem compra presente de luxo para familiar tem posição. Aniversário pode ter passado sem fechar. Verificar se ainda é oportunidade ou se há outro contexto.</div>
+    </div>
+  </div>
+  <div class="send-cta">
+    <div class="send-label">Ângulo de reabertura</div>
+    <div class="send-bubble">Leonardo, aquele presente pro seu irmão chegou a acontecer? Surgiu uma peça muito boa aqui que acho que poderia ser ele.</div>
+  </div>
+</div>
+
+</details>
+</div>
+
+<div class="page-footer">
+  YM Watches — Template com dados fictícios<br>
+  Template para uso em demonstrações • Framework Alcoforado aplicado • Dados 100% fictícios
+</div>
+
+<script>
+// Toggle details sections
+document.querySelectorAll('details').forEach(d => {
+  d.addEventListener('toggle', function() {
+    const arrow = this.querySelector('.arrow');
+    if (arrow) arrow.textContent = this.open ? '▲' : '▼';
+  });
+});
+</script>
+
+</body>
+</html>
